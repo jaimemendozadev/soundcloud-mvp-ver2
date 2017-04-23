@@ -21,6 +21,7 @@
     "express": "^4.15.2",
     "mongoose": "^4.9.5",
     "react": "^15.5.4",
+    "react-bootstrap": "^0.30.10",
     "react-dom": "^15.5.4",
     "react-player": "^0.15.0",
     "webpack": "^2.4.1"

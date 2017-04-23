@@ -2,13 +2,10 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import ReactPlayer from 'react-player';
+import Search from './search.jsx';
+const helper = require('./helpers/index.jsx');
+const scConfig = require('../config.js');
 
-const SoundCloudAPI = require('../config.js');
-
-const scConfig = {
-  clientId: SoundCloudAPI.ID,
-  showArtwork: true
-};
 
 //playerSong: "https://api.soundcloud.com/tracks/18952266/stream",  
 
@@ -17,12 +14,19 @@ class App extends Component {
       super(props);
       this.state = {
         firstSong: {},
-        songs: []
+        songs: [],
+        backupSong: 'https://soundcloud.com/fly-eye/awooga-1'
       }
+      this.handleSearch = this.handleSearch.bind(this);
     }
-    componentDidMount(){
 
-      axios.get("http://api.soundcloud.com/tracks?client_id=" + SoundCloudAPI.ID + "&q=awooga")
+    handleSearch(string){
+      console.log("Inside handleSearch")
+      var self = this;
+      
+      // helper.axiosGET(self, string);
+
+      axios.get(`${scConfig.query}&q=${string}`)
         .then( (response) => {
                   
           var data = response.data;
@@ -31,27 +35,62 @@ class App extends Component {
           console.log("data is ", data);
           console.log("playSong is ", playSong)  
 
-          this.setState({
+          self.setState({
             firstSong: playSong,
             songs: data
           });
         })
         .catch( (error) => {
           console.log(error);
-      });      
+      }); 
+      
+    }
+    
+    componentDidMount(){
+      var self = this;
+      // helper.axiosGET(self);
+
+
+      axios.get(`${scConfig.query}&q=awooga`)
+        .then( (response) => {
+                  
+          var data = response.data;
+          var playSong = data.shift();
+
+          console.log("data is ", data);
+          console.log("playSong is ", playSong)  
+
+          self.setState({
+            firstSong: playSong,
+            songs: data
+          });
+        })
+        .catch( (error) => {
+          console.log(error);
+      }); 
+
     }
     render() {
+      
       return (
         //https://soundcloud.com/fly-eye/awooga-1
 
         //this.state.firstSong.permalink_url
-
-        <ReactPlayer 
-        soundcloudConfig={scConfig} 
-        url={'https://soundcloud.com/fly-eye/awooga-1'} 
-        controls={true}
         
-        playing />
+
+        <div>
+
+          <ReactPlayer 
+          soundcloudConfig={scConfig} 
+          url={'https://soundcloud.com/fly-eye/awooga-1'} 
+          controls={true}
+          playing />
+
+          <Search cb={this.handleSearch} />
+
+        </div>
+
+
         
         
 

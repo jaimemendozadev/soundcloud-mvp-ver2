@@ -11223,9 +11223,11 @@ module.exports = ReactPropTypesSecret;
 /***/ (function(module, exports) {
 
 module.exports = {
-  ID: 'LUC6CFjNwzGZPSCgh5yEuPc2CKuMJFCJ',
-  Secret: '22t5Z1As1QkVGOgQaIFAlFWWnxacWmvN' 
-}
+  clientId: 'LUC6CFjNwzGZPSCgh5yEuPc2CKuMJFCJ',
+  Secret: '22t5Z1As1QkVGOgQaIFAlFWWnxacWmvN',
+  query: "http://api.soundcloud.com/tracks?client_id=" + 'LUC6CFjNwzGZPSCgh5yEuPc2CKuMJFCJ',
+  showArtwork: true
+};
 
 /***/ }),
 /* 102 */
@@ -12321,6 +12323,10 @@ var _reactPlayer = __webpack_require__(104);
 
 var _reactPlayer2 = _interopRequireDefault(_reactPlayer);
 
+var _search = __webpack_require__(246);
+
+var _search2 = _interopRequireDefault(_search);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -12329,12 +12335,8 @@ function _possibleConstructorReturn(self, call) { if (!self) { throw new Referen
 
 function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
 
-var SoundCloudAPI = __webpack_require__(101);
-
-var scConfig = {
-  clientId: SoundCloudAPI.ID,
-  showArtwork: true
-};
+var helper = __webpack_require__(247);
+var scConfig = __webpack_require__(101);
 
 //playerSong: "https://api.soundcloud.com/tracks/18952266/stream",  
 
@@ -12348,17 +12350,22 @@ var App = function (_Component) {
 
     _this.state = {
       firstSong: {},
-      songs: []
+      songs: [],
+      backupSong: 'https://soundcloud.com/fly-eye/awooga-1'
     };
+    _this.handleSearch = _this.handleSearch.bind(_this);
     return _this;
   }
 
   _createClass(App, [{
-    key: 'componentDidMount',
-    value: function componentDidMount() {
-      var _this2 = this;
+    key: 'handleSearch',
+    value: function handleSearch(string) {
+      console.log("Inside handleSearch");
+      var self = this;
 
-      _axios2.default.get("http://api.soundcloud.com/tracks?client_id=" + SoundCloudAPI.ID + "&q=awooga").then(function (response) {
+      // helper.axiosGET(self, string);
+
+      _axios2.default.get(scConfig.query + '&q=' + string).then(function (response) {
 
         var data = response.data;
         var playSong = data.shift();
@@ -12366,7 +12373,30 @@ var App = function (_Component) {
         console.log("data is ", data);
         console.log("playSong is ", playSong);
 
-        _this2.setState({
+        self.setState({
+          firstSong: playSong,
+          songs: data
+        });
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+      var self = this;
+      // helper.axiosGET(self);
+
+
+      _axios2.default.get(scConfig.query + '&q=awooga').then(function (response) {
+
+        var data = response.data;
+        var playSong = data.shift();
+
+        console.log("data is ", data);
+        console.log("playSong is ", playSong);
+
+        self.setState({
           firstSong: playSong,
           songs: data
         });
@@ -12377,17 +12407,23 @@ var App = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+
       return (
         //https://soundcloud.com/fly-eye/awooga-1
 
         //this.state.firstSong.permalink_url
 
-        _react2.default.createElement(_reactPlayer2.default, {
-          soundcloudConfig: scConfig,
-          url: 'https://soundcloud.com/fly-eye/awooga-1',
-          controls: true,
 
-          playing: true })
+        _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(_reactPlayer2.default, {
+            soundcloudConfig: scConfig,
+            url: 'https://soundcloud.com/fly-eye/awooga-1',
+            controls: true,
+            playing: true }),
+          _react2.default.createElement(_search2.default, { cb: this.handleSearch })
+        )
       );
     }
   }]);
@@ -29642,6 +29678,44 @@ module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
+
+/***/ }),
+/* 246 */
+/***/ (function(module, exports) {
+
+throw new Error("Module build failed: SyntaxError: Adjacent JSX elements must be wrapped in an enclosing tag (36:6)\n\n\u001b[0m \u001b[90m 34 | \u001b[39m        {\u001b[90m//Why does it work with an onClick and not an onSubmit?}\u001b[39m\n \u001b[90m 35 | \u001b[39m        \u001b[33m<\u001b[39m\u001b[33mbutton\u001b[39m onClick\u001b[33m=\u001b[39m{\u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mhandleSubmit}\u001b[33m>\u001b[39m\u001b[33mSubmit\u001b[39m\u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mbutton\u001b[39m\u001b[33m>\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 36 | \u001b[39m      \u001b[33m<\u001b[39m\u001b[33m/\u001b[39m\u001b[33mdiv\u001b[39m\u001b[33m>\u001b[39m\n \u001b[90m    | \u001b[39m      \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 37 | \u001b[39m    )\u001b[33m;\u001b[39m\n \u001b[90m 38 | \u001b[39m  }\n \u001b[90m 39 | \u001b[39m}\u001b[0m\n");
+
+/***/ }),
+/* 247 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+var axios = __webpack_require__(102);
+var scConfig = __webpack_require__(101);
+
+module.exports = {
+  axiosGET: function axiosGET() {
+    var reference = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this;
+    var searchString = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'awooga';
+
+    axios.get(scConfig.query + '&q=' + searchString).then(function (response) {
+      var data = response.data;
+      var playSong = data.shift();
+
+      console.log("data is ", data);
+      console.log("playSong is ", playSong);
+
+      reference.setState({
+        firstSong: playSong,
+        songs: data
+      });
+    }).catch(function (error) {
+      console.log(error);
+    });
+  }
+};
 
 /***/ })
 /******/ ]);
