@@ -21,28 +21,23 @@ class App extends Component {
     }
 
     handleSearch(string){
-      console.log("Inside handleSearch")
       var self = this;
       
-      // helper.axiosGET(self, string);
+      
 
-      axios.get(`${scConfig.query}&q=${string}`)
-        .then( (response) => {
-                  
-          var data = response.data;
-          var playSong = data.shift();
+      var callback = function(data){
+        console.log("successfully invoked callback on retrieved results")
+        console.log("retrievedData.length is ", data.length)
+        for (var i in data)
+          console.log(data[i])
+        // var actualData = data[0].data;
+        // console.log("the retrieved data is ", JSON.stringify(data))
+      }
+      
+      //test
+      helper.axiosGET(callback, string);
 
-          console.log("data is ", data);
-          console.log("playSong is ", playSong)  
-
-          self.setState({
-            firstSong: playSong,
-            songs: data
-          });
-        })
-        .catch( (error) => {
-          console.log(error);
-      }); 
+      //helper.axiosGET(self, string);
       
     }
     
@@ -51,7 +46,7 @@ class App extends Component {
       // helper.axiosGET(self);
 
 
-      axios.get(`${scConfig.query}&q=awooga`)
+      axios.get(`${scConfig.trackQuery}${scConfig.clientId}&q=` + "awooga")
         .then( (response) => {
                   
           var data = response.data;
@@ -86,7 +81,7 @@ class App extends Component {
           controls={true}
           playing />
 
-          <Search cb={this.handleSearch} />
+          <Search callback={this.handleSearch} />
 
         </div>
 

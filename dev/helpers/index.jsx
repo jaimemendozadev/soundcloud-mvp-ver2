@@ -2,22 +2,49 @@ var axios = require('axios');
 const scConfig = require('../../config.js');
 
 module.exports = {
-  axiosGET: function(reference = this, searchString = 'awooga'){
-    axios.get(`${scConfig.query}&q=${searchString}`)
+  axiosGET: function(reference = this, searchString = 'Zedd'){
+
+    //I assume searchString will be a string
+
+    console.log("Inside axios helper func");
+    var counter = 0;
+    var results = [];
+
+    //search for track with searchString
+    axios.get(`${scConfig.trackQuery}${scConfig.clientId}&q=${searchString}`)
       .then( (response) => {
-        var data = response.data;
-        var playSong = data.shift();
+        counter++;
+        console.log("results inside axios is ", JSON.stringify(response));
+        console.log("");
+        results.push(response);
 
-        console.log("data is ", data);
-        console.log("playSong is ", playSong)  
+        if (counter == 2){
+          console.log("Do something inside axios then");
+          reference(results);
+        } 
 
-        reference.setState({
-          firstSong: playSong,
-          songs: data
-        });
+
       })
       .catch( (error) => {
         console.log(error);
       }); 
+
+    //search for a user with searchString
+    axios.get(`${scConfig.userQuery}${scConfig.clientId}&q=${searchString}`)
+      .then( (response) => {
+        counter++;
+        console.log("results inside axios is ", JSON.stringify(response));
+        console.log("");
+        results.push(response);
+        
+        if (counter == 2){
+          console.log("Do something inside axios then");
+          reference(results)
+        }
+      })
+      .catch( (error) => {
+        console.log(error);
+      }); 
+
   }
 }

@@ -17,10 +17,11 @@ class Search extends Component {
     })
   }
 
-  handleSubmit(){
-    console.log("inside handleSubmit")
+  handleSubmit(event){
+    console.log("inside <Search /> handleSubmit")
+    event.preventDefault();
 
-    this.props.cb(this.state.inputField);
+    this.props.callback(this.state.inputField);
 
     
   }
@@ -28,12 +29,14 @@ class Search extends Component {
   render(){
     {console.log("props is ", this.props)}
     return (
-      <div>
+      <form onSubmit={this.handleSubmit}>
         <input onChange={this.handleInput} type="text" value={this.state.inputField} />
+        
+        {/*Why does it work with an onClick and not an onSubmit?*/}
+        {/*<button onClick={this.handleSubmit}>Submit</button>*/}
 
-        {//Why does it work with an onClick and not an onSubmit?}
-        <button onClick={this.handleSubmit}>Submit</button>
-      </div>
+        <button>Submit</button>
+      </form>
     );
   }
 }
