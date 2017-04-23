@@ -18,7 +18,6 @@ class Search extends Component {
   }
 
   handleSubmit(event){
-    console.log("inside <Search /> handleSubmit")
     event.preventDefault();
 
     this.props.callback(this.state.inputField);
@@ -27,7 +26,6 @@ class Search extends Component {
   }
 
   render(){
-    {console.log("props is ", this.props)}
     return (
       <form onSubmit={this.handleSubmit}>
         <input onChange={this.handleInput} type="text" value={this.state.inputField} />

@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import axios from 'axios';
 import ReactPlayer from 'react-player';
 import Search from './search.jsx';
+import SearchView from './SearchView/SearchView.jsx';
 const helper = require('./helpers/index.jsx');
 const scConfig = require('../config.js');
 
@@ -18,60 +19,41 @@ class App extends Component {
         backupSong: 'https://soundcloud.com/fly-eye/awooga-1'
       }
       this.handleSearch = this.handleSearch.bind(this);
+      this.getListOfSearchResults = this.getListOfSearchResults.bind(this);
     }
 
-    handleSearch(string){
-      var self = this;
-      
-      
+    handleSearch(string){      
+      helper.axiosGET(this.getListOfSearchResults, string);
+    }
 
-      var callback = function(data){
-        console.log("successfully invoked callback on retrieved results")
-        console.log("retrievedData.length is ", data.length)
-        for (var i in data)
-          console.log(data[i])
-        // var actualData = data[0].data;
-        // console.log("the retrieved data is ", JSON.stringify(data))
-      }
-      
-      //test
-      helper.axiosGET(callback, string);
+    getListOfSearchResults(data){
+      var listOfSearchResults = [];
 
-      //helper.axiosGET(self, string);
-      
+      data.forEach((obj) => {
+        var songObj = obj.data;
+
+        if(songObj.length > 0) {
+          songObj.forEach((song) => {
+            listOfSearchResults.push(song);
+          });
+        }
+
+      });
+
+      console.log("listOfSearchResults is ", listOfSearchResults);
+
+      this.setState({
+        songs: listOfSearchResults
+      });
     }
     
+
     componentDidMount(){
-      var self = this;
-      // helper.axiosGET(self);
-
-
-      axios.get(`${scConfig.trackQuery}${scConfig.clientId}&q=` + "awooga")
-        .then( (response) => {
-                  
-          var data = response.data;
-          var playSong = data.shift();
-
-          console.log("data is ", data);
-          console.log("playSong is ", playSong)  
-
-          self.setState({
-            firstSong: playSong,
-            songs: data
-          });
-        })
-        .catch( (error) => {
-          console.log(error);
-      }); 
-
+      this.handleSearch('awooga');
     }
     render() {
       
       return (
-        //https://soundcloud.com/fly-eye/awooga-1
-
-        //this.state.firstSong.permalink_url
-        
 
         <div>
 
@@ -83,11 +65,9 @@ class App extends Component {
 
           <Search callback={this.handleSearch} />
 
+          <SearchView listOfSongs={this.state.songs} />
+
         </div>
-
-
-        
-        
 
       );
     }

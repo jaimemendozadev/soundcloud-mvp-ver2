@@ -11256,8 +11256,7 @@ var axios = __webpack_require__(63);
 var scConfig = __webpack_require__(62);
 
 module.exports = {
-  axiosGET: function axiosGET() {
-    var reference = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : this;
+  axiosGET: function axiosGET(callback) {
     var searchString = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'Zedd';
 
 
@@ -11276,7 +11275,7 @@ module.exports = {
 
       if (counter == 2) {
         console.log("Do something inside axios then");
-        reference(results);
+        callback(results);
       }
     }).catch(function (error) {
       console.log(error);
@@ -11291,7 +11290,7 @@ module.exports = {
 
       if (counter == 2) {
         console.log("Do something inside axios then");
-        reference(results);
+        callback(results);
       }
     }).catch(function (error) {
       console.log(error);
@@ -11351,7 +11350,6 @@ var Search = function (_Component) {
   }, {
     key: "handleSubmit",
     value: function handleSubmit(event) {
-      console.log("inside <Search /> handleSubmit");
       event.preventDefault();
 
       this.props.callback(this.state.inputField);
@@ -11359,9 +11357,6 @@ var Search = function (_Component) {
   }, {
     key: "render",
     value: function render() {
-      {
-        console.log("props is ", this.props);
-      }
       return _react2.default.createElement(
         "form",
         { onSubmit: this.handleSubmit },
@@ -12472,6 +12467,10 @@ var _search = __webpack_require__(104);
 
 var _search2 = _interopRequireDefault(_search);
 
+var _SearchView = __webpack_require__(248);
+
+var _SearchView2 = _interopRequireDefault(_SearchView);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -12499,71 +12498,55 @@ var App = function (_Component) {
       backupSong: 'https://soundcloud.com/fly-eye/awooga-1'
     };
     _this.handleSearch = _this.handleSearch.bind(_this);
+    _this.getListOfSearchResults = _this.getListOfSearchResults.bind(_this);
     return _this;
   }
 
   _createClass(App, [{
     key: 'handleSearch',
     value: function handleSearch(string) {
-      var self = this;
+      helper.axiosGET(this.getListOfSearchResults, string);
+    }
+  }, {
+    key: 'getListOfSearchResults',
+    value: function getListOfSearchResults(data) {
+      var listOfSearchResults = [];
 
-      var callback = function callback(data) {
-        console.log("successfully invoked callback on retrieved results");
-        console.log("retrievedData.length is ", data.length);
-        for (var i in data) {
-          console.log(data[i]);
-        } // var actualData = data[0].data;
-        // console.log("the retrieved data is ", JSON.stringify(data))
-      };
+      data.forEach(function (obj) {
+        var songObj = obj.data;
 
-      //test
-      helper.axiosGET(callback, string);
+        if (songObj.length > 0) {
+          songObj.forEach(function (song) {
+            listOfSearchResults.push(song);
+          });
+        }
+      });
 
-      //helper.axiosGET(self, string);
+      console.log("listOfSearchResults is ", listOfSearchResults);
+
+      this.setState({
+        songs: listOfSearchResults
+      });
     }
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
-      var self = this;
-      // helper.axiosGET(self);
-
-
-      _axios2.default.get('' + scConfig.trackQuery + scConfig.clientId + '&q=' + "awooga").then(function (response) {
-
-        var data = response.data;
-        var playSong = data.shift();
-
-        console.log("data is ", data);
-        console.log("playSong is ", playSong);
-
-        self.setState({
-          firstSong: playSong,
-          songs: data
-        });
-      }).catch(function (error) {
-        console.log(error);
-      });
+      this.handleSearch('awooga');
     }
   }, {
     key: 'render',
     value: function render() {
 
-      return (
-        //https://soundcloud.com/fly-eye/awooga-1
-
-        //this.state.firstSong.permalink_url
-
-
-        _react2.default.createElement(
-          'div',
-          null,
-          _react2.default.createElement(_reactPlayer2.default, {
-            soundcloudConfig: scConfig,
-            url: 'https://soundcloud.com/fly-eye/awooga-1',
-            controls: true,
-            playing: true }),
-          _react2.default.createElement(_search2.default, { callback: this.handleSearch })
-        )
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(_reactPlayer2.default, {
+          soundcloudConfig: scConfig,
+          url: 'https://soundcloud.com/fly-eye/awooga-1',
+          controls: true,
+          playing: true }),
+        _react2.default.createElement(_search2.default, { callback: this.handleSearch }),
+        _react2.default.createElement(_SearchView2.default, { listOfSongs: this.state.songs })
       );
     }
   }]);
@@ -29818,6 +29801,93 @@ module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
+
+/***/ }),
+/* 248 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(16);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _SearchViewItem = __webpack_require__(249);
+
+var _SearchViewItem2 = _interopRequireDefault(_SearchViewItem);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SearchView = function SearchView(props) {
+  if (!props.listOfSongs) {
+    return _react2.default.createElement(
+      'h3',
+      null,
+      'Waiting for data...'
+    );
+  }
+  return _react2.default.createElement(
+    'div',
+    null,
+    props.listOfSongs.map(function (song, idx) {
+      return _react2.default.createElement(_SearchViewItem2.default, { key: song.id, data: song });
+    })
+  );
+};
+
+exports.default = SearchView;
+
+/***/ }),
+/* 249 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(16);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SearchViewItem = function SearchViewItem(props) {
+  return _react2.default.createElement(
+    "div",
+    null,
+    _react2.default.createElement(
+      "span",
+      null,
+      "Title: ",
+      props.data.title ? props.data.title : "Unavailable"
+    ),
+    _react2.default.createElement("br", null),
+    _react2.default.createElement(
+      "span",
+      null,
+      "Genre: ",
+      props.data.genre ? props.data.genre : "Unavailable"
+    ),
+    _react2.default.createElement("br", null),
+    _react2.default.createElement(
+      "span",
+      null,
+      "Url: ",
+      props.data.permalink_url ? props.data.permalink_url : "Unavailable"
+    ),
+    _react2.default.createElement("br", null)
+  );
+};
+
+exports.default = SearchViewItem;
 
 /***/ })
 /******/ ]);

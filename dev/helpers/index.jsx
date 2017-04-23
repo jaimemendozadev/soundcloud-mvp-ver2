@@ -2,7 +2,7 @@ var axios = require('axios');
 const scConfig = require('../../config.js');
 
 module.exports = {
-  axiosGET: function(reference = this, searchString = 'Zedd'){
+  axiosGET: function(callback, searchString = 'Zedd'){
 
     //I assume searchString will be a string
 
@@ -20,7 +20,7 @@ module.exports = {
 
         if (counter == 2){
           console.log("Do something inside axios then");
-          reference(results);
+          callback(results);
         } 
 
 
@@ -39,7 +39,7 @@ module.exports = {
         
         if (counter == 2){
           console.log("Do something inside axios then");
-          reference(results)
+          callback(results)
         }
       })
       .catch( (error) => {
