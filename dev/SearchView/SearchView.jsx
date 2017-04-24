@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
-import SearchViewItem from './SearchViewItem.jsx';
+import ListItem from '../ListItem.jsx';
+
 
 const SearchView = (props) => {
   if (!props.listOfSongs) {
@@ -8,7 +9,7 @@ const SearchView = (props) => {
   return ( 
       <div>
       {props.listOfSongs.map((song, idx) => {
-        return <SearchViewItem addToQueueCB={props.addToQueueCB} key={song.id} data={song} />
+        return <ListItem invokeCB={props.addToQueueCB} key={song.id} data={song} />
       })}
       </div>      
   )

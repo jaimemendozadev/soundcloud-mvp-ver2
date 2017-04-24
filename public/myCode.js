@@ -11261,9 +11261,9 @@ var _react = __webpack_require__(8);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _SearchViewItem = __webpack_require__(126);
+var _ListItem = __webpack_require__(252);
 
-var _SearchViewItem2 = _interopRequireDefault(_SearchViewItem);
+var _ListItem2 = _interopRequireDefault(_ListItem);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -11279,7 +11279,7 @@ var SearchView = function SearchView(props) {
     'div',
     null,
     props.listOfSongs.map(function (song, idx) {
-      return _react2.default.createElement(_SearchViewItem2.default, { addToQueueCB: props.addToQueueCB, key: song.id, data: song });
+      return _react2.default.createElement(_ListItem2.default, { invokeCB: props.addToQueueCB, key: song.id, data: song });
     })
   );
 };
@@ -11287,46 +11287,7 @@ var SearchView = function SearchView(props) {
 exports.default = SearchView;
 
 /***/ }),
-/* 104 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(8);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _SongQueueItem = __webpack_require__(127);
-
-var _SongQueueItem2 = _interopRequireDefault(_SongQueueItem);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var SongQueue = function SongQueue(props) {
-  if (!props.queueList) {
-    return _react2.default.createElement(
-      'h3',
-      null,
-      'Waiting for data...'
-    );
-  }
-  return _react2.default.createElement(
-    'div',
-    null,
-    props.queueList.map(function (song, idx) {
-      return _react2.default.createElement(_SongQueueItem2.default, { playSongCB: props.playSongCB, key: song.id, data: song });
-    })
-  );
-};
-
-exports.default = SongQueue;
-
-/***/ }),
+/* 104 */,
 /* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12498,154 +12459,8 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 126 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(8);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var SearchViewItem = function SearchViewItem(props) {
-
-  var handleClick = function handleClick() {
-    props.addToQueueCB(props.data);
-  };
-
-  var styling = {
-    marginBottom: 10
-  };
-
-  return _react2.default.createElement(
-    "div",
-    { onClick: handleClick, style: styling },
-    _react2.default.createElement(
-      "span",
-      null,
-      "Title: ",
-      props.data.title ? props.data.title : "Unavailable"
-    ),
-    _react2.default.createElement("br", null),
-    _react2.default.createElement(
-      "span",
-      null,
-      "Genre: ",
-      props.data.genre ? props.data.genre : "Unavailable"
-    ),
-    _react2.default.createElement("br", null),
-    _react2.default.createElement(
-      "span",
-      null,
-      props.data.permalink_url ? _react2.default.createElement(
-        "a",
-        { href: props.data.permalink_url, target: "_blank" },
-        "SoundCloud Link"
-      ) : "Unavailable"
-    )
-  );
-};
-
-exports.default = SearchViewItem;
-
-/*
-//Save class version of SearchViewItem just in case
-
-
-class SearchViewItem extends Component {
-  constructor(props){
-    super(props);
-    this.handleClick = this.handleClick.bind(this);
-  }
-  
-
-  handleClick() {
-    this.props.playSongCB(this.props.data);
-  }
-  
-  render() {
-    const styling = {
-      marginBottom: 10
-    }
-
-    return ( 
-      <div onClick={this.handleClick} style={styling}>
-        <span>Title: {this.props.data.title ? this.props.data.title : "Unavailable"}</span><br />
-        <span>Genre: {this.props.data.genre ? this.props.data.genre : "Unavailable"}</span><br />
-        <span>{this.props.data.permalink_url ? <a href={this.props.data.permalink_url} target="_blank">SoundCloud Link</a> : "Unavailable"}</span>
-      </div>   
-    )
-  }
-  
-}
-*/
-
-/***/ }),
-/* 127 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(8);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var SongQueueItem = function SongQueueItem(props) {
-
-  var handleClick = function handleClick() {
-    props.playSongCB(props.data);
-  };
-
-  var styling = {
-    marginBottom: 10
-  };
-
-  return _react2.default.createElement(
-    "div",
-    { onClick: handleClick, style: styling },
-    _react2.default.createElement(
-      "span",
-      null,
-      "Title: ",
-      props.data.title ? props.data.title : "Unavailable"
-    ),
-    _react2.default.createElement("br", null),
-    _react2.default.createElement(
-      "span",
-      null,
-      "Genre: ",
-      props.data.genre ? props.data.genre : "Unavailable"
-    ),
-    _react2.default.createElement("br", null),
-    _react2.default.createElement(
-      "span",
-      null,
-      props.data.permalink_url ? _react2.default.createElement(
-        "a",
-        { href: props.data.permalink_url, target: "_blank" },
-        "SoundCloud Link"
-      ) : "Unavailable"
-    )
-  );
-};
-
-exports.default = SongQueueItem;
-
-/***/ }),
+/* 126 */,
+/* 127 */,
 /* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12678,9 +12493,9 @@ var _SearchView = __webpack_require__(103);
 
 var _SearchView2 = _interopRequireDefault(_SearchView);
 
-var _SongQueue = __webpack_require__(104);
+var _SongQueueView = __webpack_require__(253);
 
-var _SongQueue2 = _interopRequireDefault(_SongQueue);
+var _SongQueueView2 = _interopRequireDefault(_SongQueueView);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -12780,7 +12595,7 @@ var App = function (_Component) {
             'SongQueue'
           ),
           'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate ex, minima ipsum similique eaque, ipsa, reprehenderit nam blanditiis omnis facilis necessitatibus corporis aperiam deleniti. Quas, quod, assumenda. Dignissimos, nisi, possimus.',
-          _react2.default.createElement(_SongQueue2.default, { queueList: this.state.songQueue, playSongCB: this.playNextSong })
+          _react2.default.createElement(_SongQueueView2.default, { queueList: this.state.songQueue, playSongCB: this.playNextSong })
         ),
         _react2.default.createElement(
           'div',
@@ -30048,6 +29863,105 @@ module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
+
+/***/ }),
+/* 252 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(8);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ListItem = function ListItem(props) {
+
+  var handleClick = function handleClick() {
+    props.invokeCB(props.data);
+  };
+
+  var styling = {
+    marginTop: 5,
+    marginBottom: 10
+  };
+
+  return _react2.default.createElement(
+    "div",
+    { onClick: handleClick, style: styling },
+    _react2.default.createElement(
+      "span",
+      null,
+      "Title: ",
+      props.data.title ? props.data.title : "Unavailable"
+    ),
+    _react2.default.createElement("br", null),
+    _react2.default.createElement(
+      "span",
+      null,
+      "Genre: ",
+      props.data.genre ? props.data.genre : "Unavailable"
+    ),
+    _react2.default.createElement("br", null),
+    _react2.default.createElement(
+      "span",
+      null,
+      props.data.permalink_url ? _react2.default.createElement(
+        "a",
+        { href: props.data.permalink_url, target: "_blank" },
+        "SoundCloud Link"
+      ) : "Unavailable"
+    )
+  );
+};
+
+exports.default = ListItem;
+
+/***/ }),
+/* 253 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(8);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _ListItem = __webpack_require__(252);
+
+var _ListItem2 = _interopRequireDefault(_ListItem);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SongQueue = function SongQueue(props) {
+  if (!props.queueList) {
+    return _react2.default.createElement(
+      'h3',
+      null,
+      'Waiting for data...'
+    );
+  }
+  return _react2.default.createElement(
+    'div',
+    null,
+    props.queueList.map(function (song, idx) {
+      return _react2.default.createElement(_ListItem2.default, { invokeCB: props.playSongCB, key: song.id, data: song });
+    })
+  );
+};
+
+exports.default = SongQueue;
 
 /***/ })
 /******/ ]);

@@ -4,7 +4,7 @@ import axios from 'axios';
 import ReactPlayer from 'react-player';
 import Search from './search.jsx';
 import SearchView from './SearchView/SearchView.jsx';
-import SongQueue from './SongQueue/SongQueue.jsx'
+import SongQueueView from './SongQueueView/SongQueueView.jsx'
 const helper = require('./helpers/index.jsx');
 const scConfig = require('../config.js');
 
@@ -88,7 +88,7 @@ class App extends Component {
 
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate ex, minima ipsum similique eaque, ipsa, reprehenderit nam blanditiis omnis facilis necessitatibus corporis aperiam deleniti. Quas, quod, assumenda. Dignissimos, nisi, possimus.
 
-           <SongQueue queueList={this.state.songQueue} playSongCB={this.playNextSong} />
+           <SongQueueView queueList={this.state.songQueue} playSongCB={this.playNextSong} />
 
             
           </div>

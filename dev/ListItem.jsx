@@ -1,13 +1,14 @@
 import React, {Component} from 'react';
 
-const SongQueueItem = (props) => {
+const ListItem = (props) => {
 
   const handleClick = () => {
-    props.playSongCB(props.data);
+    props.invokeCB(props.data);
   }
   
  
     const styling = {
+      marginTop: 5,  
       marginBottom: 10
     }
 
@@ -22,4 +23,4 @@ const SongQueueItem = (props) => {
   
 }
 
-export default SongQueueItem;
+export default ListItem;
