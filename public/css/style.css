@@ -1,0 +1,17 @@
+.playerStyling {
+  width: 60%;
+  float: left;
+  margin: 0 1em 0 0;
+}
+
+.searchStyling {
+  width: 30%;
+  float: right;
+  margin: 0 0 1em 0;
+}
+
+.clearFix::after {
+  content: "";
+  display: table; 
+  clear: both;
+}

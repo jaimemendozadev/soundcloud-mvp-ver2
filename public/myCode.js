@@ -12620,11 +12620,10 @@ var SearchViewItem = function SearchViewItem(props) {
     _react2.default.createElement(
       "span",
       null,
-      "Url: ",
       props.data.permalink_url ? _react2.default.createElement(
         "a",
         { href: props.data.permalink_url, target: "_blank" },
-        props.data.permalink_url
+        "SoundCloud Link"
       ) : "Unavailable"
     )
   );
@@ -12665,6 +12664,10 @@ var _SearchView = __webpack_require__(225);
 
 var _SearchView2 = _interopRequireDefault(_SearchView);
 
+var _SongQueue = __webpack_require__(511);
+
+var _SongQueue2 = _interopRequireDefault(_SongQueue);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -12688,7 +12691,7 @@ var App = function (_Component) {
 
     _this.state = {
       firstSong: {},
-      songs: [],
+      searchResults: [],
       backupSong: 'https://soundcloud.com/fly-eye/awooga-1'
     };
     _this.handleSearch = _this.handleSearch.bind(_this);
@@ -12717,7 +12720,7 @@ var App = function (_Component) {
       console.log("listOfSearchResults is ", listOfSearchResults);
 
       this.setState({
-        songs: listOfSearchResults
+        searchResults: listOfSearchResults
       });
     }
   }, {
@@ -12728,17 +12731,37 @@ var App = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-
       return _react2.default.createElement(
         'div',
         null,
-        _react2.default.createElement(_reactPlayer2.default, {
-          soundcloudConfig: scConfig,
-          url: 'https://soundcloud.com/fly-eye/awooga-1',
-          controls: true,
-          playing: true }),
-        _react2.default.createElement(_search2.default, { callback: this.handleSearch }),
-        _react2.default.createElement(_SearchView2.default, { listOfSongs: this.state.songs })
+        _react2.default.createElement(
+          'div',
+          { className: 'playerStyling' },
+          _react2.default.createElement(_reactPlayer2.default, {
+            soundcloudConfig: scConfig,
+            url: 'https://soundcloud.com/fly-eye/awooga-1',
+            controls: true,
+            playing: true }),
+          _react2.default.createElement(
+            'h1',
+            null,
+            'SongQueue'
+          ),
+          'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate ex, minima ipsum similique eaque, ipsa, reprehenderit nam blanditiis omnis facilis necessitatibus corporis aperiam deleniti. Quas, quod, assumenda. Dignissimos, nisi, possimus.',
+          _react2.default.createElement(_SongQueue2.default, null)
+        ),
+        _react2.default.createElement(
+          'div',
+          { className: 'searchStyling' },
+          _react2.default.createElement(
+            'h1',
+            null,
+            'Search Results'
+          ),
+          _react2.default.createElement(_search2.default, { callback: this.handleSearch }),
+          _react2.default.createElement(_SearchView2.default, { listOfSongs: this.state.searchResults })
+        ),
+        _react2.default.createElement('div', { className: 'clearFix' })
       );
     }
   }]);
@@ -12746,7 +12769,7 @@ var App = function (_Component) {
   return App;
 }(_react.Component);
 
-_reactDom2.default.render(_react2.default.createElement(App, null), document.querySelector('.container'));
+_reactDom2.default.render(_react2.default.createElement(App, null), document.querySelector('.app'));
 
 /***/ }),
 /* 249 */,
@@ -30131,6 +30154,53 @@ var toString = {}.toString;
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
+
+
+/***/ }),
+/* 511 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(1);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _SongQueueItem = __webpack_require__(512);
+
+var _SongQueueItem2 = _interopRequireDefault(_SongQueueItem);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SongQueue = function SongQueue(props) {
+  if (!props.listOfSongs) {
+    return _react2.default.createElement(
+      'h3',
+      null,
+      'Waiting for data...'
+    );
+  }
+  return _react2.default.createElement(
+    'div',
+    null,
+    props.listOfSongs.map(function (song, idx) {
+      return _react2.default.createElement(_SongQueueItem2.default, { key: song.id, data: song });
+    })
+  );
+};
+
+exports.default = SongQueue;
+
+/***/ }),
+/* 512 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 
 
 /***/ })

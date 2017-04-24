@@ -4,6 +4,7 @@ import axios from 'axios';
 import ReactPlayer from 'react-player';
 import Search from './search.jsx';
 import SearchView from './SearchView/SearchView.jsx';
+import SongQueue from './SongQueue/SongQueue.jsx'
 const helper = require('./helpers/index.jsx');
 const scConfig = require('../config.js');
 
@@ -15,7 +16,7 @@ class App extends Component {
       super(props);
       this.state = {
         firstSong: {},
-        songs: [],
+        searchResults: [],
         backupSong: 'https://soundcloud.com/fly-eye/awooga-1'
       }
       this.handleSearch = this.handleSearch.bind(this);
@@ -41,7 +42,7 @@ class App extends Component {
       console.log("listOfSearchResults is ", listOfSearchResults);
 
       this.setState({
-        songs: listOfSearchResults
+        searchResults: listOfSearchResults
       });
     }
     
@@ -51,21 +52,36 @@ class App extends Component {
     }
 
     render() {
-      
       return (
-
+        
         <div>
+          <div className="playerStyling">
+            <ReactPlayer 
+              soundcloudConfig={scConfig} 
+              url={'https://soundcloud.com/fly-eye/awooga-1'} 
+              controls={true}
+              playing />
+            
+            <h1>SongQueue</h1>
 
-          <ReactPlayer 
-          soundcloudConfig={scConfig} 
-          url={'https://soundcloud.com/fly-eye/awooga-1'} 
-          controls={true}
-          playing />
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate ex, minima ipsum similique eaque, ipsa, reprehenderit nam blanditiis omnis facilis necessitatibus corporis aperiam deleniti. Quas, quod, assumenda. Dignissimos, nisi, possimus.
 
-          <Search callback={this.handleSearch} />
+           <SongQueue />
 
-          <SearchView listOfSongs={this.state.songs} />
-          
+            
+          </div>
+
+
+
+          <div className="searchStyling">
+            <h1>Search Results</h1>
+            <Search callback={this.handleSearch} />
+            <SearchView listOfSongs={this.state.searchResults} />
+          </div>
+
+
+          <div className="clearFix">
+          </div>
 
         </div>
 
@@ -75,4 +91,4 @@ class App extends Component {
 }
 
 
-ReactDOM.render(<App />, document.querySelector('.container'));
+ReactDOM.render(<App />, document.querySelector('.app'));
