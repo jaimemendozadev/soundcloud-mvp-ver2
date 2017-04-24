@@ -12509,6 +12509,8 @@ var helper = __webpack_require__(105);
 var scConfig = __webpack_require__(62);
 
 //playerSong: "https://api.soundcloud.com/tracks/18952266/stream",  
+//hardCoded starter song: https://soundcloud.com/fly-eye/awooga-1
+
 
 var App = function (_Component) {
   _inherits(App, _Component);
@@ -12519,17 +12521,34 @@ var App = function (_Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
     _this.state = {
-      playSong: 'https://soundcloud.com/fly-eye/awooga-1',
+      playSong: null,
       searchResults: [],
       songQueue: [],
       backupSong: 'https://soundcloud.com/fly-eye/awooga-1'
     };
+
+    //App Methods
     _this.handleSearch = _this.handleSearch.bind(_this);
     _this.getListOfSearchResults = _this.getListOfSearchResults.bind(_this);
-    _this.playNextSong = _this.playNextSong.bind(_this);
+
+    //ListItem callbakcs
     _this.addToSongQueue = _this.addToSongQueue.bind(_this);
+    _this.removeFromQueue = _this.removeFromQueue.bind(_this);
+    _this.clickToPlaySong = _this.clickToPlaySong.bind(_this);
+    _this.putSongInPlayer = _this.putSongInPlayer.bind(_this);
+
+    _this.cbObj = {
+      remove: _this.removeFromQueue,
+      clickToPlay: _this.clickToPlaySong
+    };
+
     return _this;
   }
+
+  /*********************
+   * App Methods
+   *********************/
+
 
   _createClass(App, [{
     key: 'handleSearch',
@@ -12553,13 +12572,11 @@ var App = function (_Component) {
         searchResults: listOfSearchResults
       });
     }
-  }, {
-    key: 'playNextSong',
-    value: function playNextSong(song) {
-      this.setState({
-        playSong: song.permalink_url
-      });
-    }
+
+    /*********************
+     * ListItem callbacks
+     *********************/
+
   }, {
     key: 'addToSongQueue',
     value: function addToSongQueue(song) {
@@ -12571,6 +12588,32 @@ var App = function (_Component) {
       });
     }
   }, {
+    key: 'removeFromQueue',
+    value: function removeFromQueue(song) {
+      //FIX THIS RIGHT NOW
+      console.log("inside removeFromQueue func");
+      console.log(song);
+    }
+  }, {
+    key: 'clickToPlaySong',
+    value: function clickToPlaySong(song) {
+      console.log("inside clickToPlaySong");
+      console.log("song is ", song);
+      this.setState({
+        playSong: song
+      });
+    }
+
+    //callback for ReactPlayer onEnded event ONLY 
+
+  }, {
+    key: 'putSongInPlayer',
+    value: function putSongInPlayer(song) {
+      this.setState({
+        playSong: song
+      });
+    }
+  }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
       this.handleSearch('awooga');
@@ -12578,24 +12621,41 @@ var App = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+
+      // const cbObj = {
+      //   removeFromQueue: this.removeFromQueue,
+      //   clickToPlaySong: this.clickToPlaySong,
+      // }
+
+
       return _react2.default.createElement(
         'div',
         null,
         _react2.default.createElement(
           'div',
           { className: 'playerStyling' },
-          _react2.default.createElement(_reactPlayer2.default, {
-            soundcloudConfig: scConfig,
-            url: this.state.playSong,
-            controls: true,
-            playing: true }),
+          _react2.default.createElement(
+            'div',
+            null,
+            _react2.default.createElement(_reactPlayer2.default, {
+              soundcloudConfig: scConfig,
+              url: !this.state.playSong ? this.state.backupSong : this.state.playSong.permalink_url,
+              controls: true,
+              playing: true }),
+            _react2.default.createElement(
+              'h1',
+              null,
+              'Now Playing: ',
+              !this.state.playSong ? "Untitled" : this.state.playSong.title
+            )
+          ),
           _react2.default.createElement(
             'h1',
             null,
             'SongQueue'
           ),
           'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate ex, minima ipsum similique eaque, ipsa, reprehenderit nam blanditiis omnis facilis necessitatibus corporis aperiam deleniti. Quas, quod, assumenda. Dignissimos, nisi, possimus.',
-          _react2.default.createElement(_SongQueueView2.default, { queueList: this.state.songQueue, playSongCB: this.playNextSong })
+          _react2.default.createElement(_SongQueueView2.default, { queueList: this.state.songQueue, cbObj: this.cbObj })
         ),
         _react2.default.createElement(
           'div',
@@ -29888,7 +29948,7 @@ var ListItem = function ListItem(props) {
   };
 
   var styling = {
-    marginTop: 5,
+    marginTop: 10,
     marginBottom: 10
   };
 
@@ -29938,9 +29998,9 @@ var _react = __webpack_require__(8);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _ListItem = __webpack_require__(252);
+var _SongQueueViewItem = __webpack_require__(255);
 
-var _ListItem2 = _interopRequireDefault(_ListItem);
+var _SongQueueViewItem2 = _interopRequireDefault(_SongQueueViewItem);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
@@ -29956,12 +30016,92 @@ var SongQueue = function SongQueue(props) {
     'div',
     null,
     props.queueList.map(function (song, idx) {
-      return _react2.default.createElement(_ListItem2.default, { invokeCB: props.playSongCB, key: song.id, data: song });
+      return _react2.default.createElement(_SongQueueViewItem2.default, { cbObj: props.cbObj, key: song.id, data: song });
     })
   );
 };
 
 exports.default = SongQueue;
+
+/***/ }),
+/* 254 */,
+/* 255 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(8);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SongQueueViewItem = function SongQueueViewItem(props) {
+
+  var styling = {
+    marginTop: 10,
+    marginBottom: 10
+  };
+
+  var removeFromQueue = function removeFromQueue() {
+    console.log("inside songqueue removeFromQueue");
+    console.log(props.cbObj);
+    props.cbObj.remove(props.data);
+  };
+
+  var clickToPlaySong = function clickToPlaySong() {
+    //console.log("inside songqueue clickToPlaySong")
+    console.log("props song is", props.data);
+    props.cbObj.clickToPlay(props.data);
+  };
+
+  return _react2.default.createElement(
+    "div",
+    { style: styling },
+    _react2.default.createElement(
+      "span",
+      null,
+      "Title: ",
+      props.data.title ? props.data.title : "Unavailable"
+    ),
+    _react2.default.createElement("br", null),
+    _react2.default.createElement(
+      "span",
+      null,
+      "Genre: ",
+      props.data.genre ? props.data.genre : "Unavailable"
+    ),
+    _react2.default.createElement("br", null),
+    _react2.default.createElement(
+      "span",
+      null,
+      props.data.permalink_url ? _react2.default.createElement(
+        "a",
+        { href: props.data.permalink_url, target: "_blank" },
+        "SoundCloud Link"
+      ) : "Unavailable"
+    ),
+    _react2.default.createElement("br", null),
+    _react2.default.createElement(
+      "span",
+      { onClick: removeFromQueue },
+      "Click to Remove From Queue"
+    ),
+    _react2.default.createElement("br", null),
+    _react2.default.createElement(
+      "span",
+      { onClick: clickToPlaySong },
+      "Click to Play This Song"
+    )
+  );
+};
+
+exports.default = SongQueueViewItem;
 
 /***/ })
 /******/ ]);

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ListItem from '../ListItem.jsx';
+import SongQueueViewItem from './SongQueueViewItem.jsx';
 
 const SongQueue = (props) => {
   if (!props.queueList) {
@@ -8,7 +8,7 @@ const SongQueue = (props) => {
   return ( 
       <div>
       {props.queueList.map((song, idx) => {
-        return <ListItem invokeCB={props.playSongCB} key={song.id} data={song} />
+        return <SongQueueViewItem cbObj={props.cbObj} key={song.id} data={song} />
       })}
       </div>      
   )

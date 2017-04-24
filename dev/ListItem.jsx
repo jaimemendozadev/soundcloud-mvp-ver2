@@ -8,7 +8,7 @@ const ListItem = (props) => {
   
  
     const styling = {
-      marginTop: 5,  
+      marginTop: 10,  
       marginBottom: 10
     }
 
