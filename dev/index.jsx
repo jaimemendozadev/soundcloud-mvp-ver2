@@ -84,6 +84,26 @@ class App extends Component {
       //FIX THIS RIGHT NOW
       console.log("inside removeFromQueue func")
       console.log(song);
+      console.log("the old queue is ", this.state.songQueue)
+
+      var filterID = song.id;
+      var toRemove = this.state.songQueue;
+
+      var newQueue = toRemove.filter((song) => {
+        return song.id !== filterID;
+      });
+
+      console.log("the new queue is ", newQueue);
+
+      this.setState({
+        songQueue: newQueue
+      })
+
+
+
+
+
+
 
     }
 
@@ -110,12 +130,6 @@ class App extends Component {
 
     render() {
 
-      // const cbObj = {
-      //   removeFromQueue: this.removeFromQueue,
-      //   clickToPlaySong: this.clickToPlaySong,
-      // }
-
-      
       return (
         
         <div>

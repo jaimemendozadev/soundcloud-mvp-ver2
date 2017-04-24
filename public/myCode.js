@@ -12593,6 +12593,20 @@ var App = function (_Component) {
       //FIX THIS RIGHT NOW
       console.log("inside removeFromQueue func");
       console.log(song);
+      console.log("the old queue is ", this.state.songQueue);
+
+      var filterID = song.id;
+      var toRemove = this.state.songQueue;
+
+      var newQueue = toRemove.filter(function (song) {
+        return song.id !== filterID;
+      });
+
+      console.log("the new queue is ", newQueue);
+
+      this.setState({
+        songQueue: newQueue
+      });
     }
   }, {
     key: 'clickToPlaySong',
@@ -12621,12 +12635,6 @@ var App = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
-
-      // const cbObj = {
-      //   removeFromQueue: this.removeFromQueue,
-      //   clickToPlaySong: this.clickToPlaySong,
-      // }
-
 
       return _react2.default.createElement(
         'div',
