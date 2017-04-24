@@ -7,44 +7,22 @@ module.exports = {
     //I assume searchString will be a string
 
     console.log("Inside axios helper func");
-    var counter = 0;
-    var results = [];
+   
+    
 
     //search for track with searchString
-    axios.get(`${scConfig.trackQuery}${scConfig.clientId}&q=${searchString}`)
+    axios.get(`${scConfig.trackQuery}${scConfig.clientId}&q=${searchString}${scConfig.dateLimit}`)
       .then( (response) => {
-        counter++;
         console.log("results inside axios is ", JSON.stringify(response));
         console.log("");
-        results.push(response);
 
-        if (counter == 2){
-          console.log("Do something inside axios then");
-          callback(results);
-        } 
-
-
-      })
-      .catch( (error) => {
-        console.log(error);
-      }); 
-
-    //search for a user with searchString
-    axios.get(`${scConfig.userQuery}${scConfig.clientId}&q=${searchString}`)
-      .then( (response) => {
-        counter++;
-        console.log("results inside axios is ", JSON.stringify(response));
-        console.log("");
-        results.push(response);
+        callback(response);
         
-        if (counter == 2){
-          console.log("Do something inside axios then");
-          callback(results)
-        }
       })
       .catch( (error) => {
         console.log(error);
       }); 
+
 
   }
 }

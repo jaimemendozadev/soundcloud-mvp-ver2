@@ -26,19 +26,17 @@ class App extends Component {
       helper.axiosGET(this.getListOfSearchResults, string);
     }
 
-    getListOfSearchResults(data){
+    getListOfSearchResults(response){
       var listOfSearchResults = [];
 
-      data.forEach((obj) => {
-        var songObj = obj.data;
+      var songObj = response.data.collection;
 
-        if(songObj.length > 0) {
-          songObj.forEach((song) => {
-            listOfSearchResults.push(song);
-          });
-        }
+      if(songObj.length > 0) {
+        songObj.forEach((song) => {
+          listOfSearchResults.push(song);
+        });
+      }
 
-      });
 
       console.log("listOfSearchResults is ", listOfSearchResults);
 
@@ -51,6 +49,7 @@ class App extends Component {
     componentDidMount(){
       this.handleSearch('awooga');
     }
+
     render() {
       
       return (
@@ -66,6 +65,7 @@ class App extends Component {
           <Search callback={this.handleSearch} />
 
           <SearchView listOfSongs={this.state.songs} />
+          
 
         </div>
 
