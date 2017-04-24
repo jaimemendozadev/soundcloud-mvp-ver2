@@ -11410,7 +11410,7 @@ var SearchView = function SearchView(props) {
     'div',
     null,
     props.listOfSongs.map(function (song, idx) {
-      return _react2.default.createElement(_SearchViewItem2.default, { key: song.id, data: song });
+      return _react2.default.createElement(_SearchViewItem2.default, { playSongCB: props.playSongCB, key: song.id, data: song });
     })
   );
 };
@@ -12590,44 +12590,76 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(1);
 
 var _react2 = _interopRequireDefault(_react);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var SearchViewItem = function SearchViewItem(props) {
-  var styling = {
-    marginBottom: 10
-  };
-  return _react2.default.createElement(
-    "div",
-    { style: styling },
-    _react2.default.createElement(
-      "span",
-      null,
-      "Title: ",
-      props.data.title ? props.data.title : "Unavailable"
-    ),
-    _react2.default.createElement("br", null),
-    _react2.default.createElement(
-      "span",
-      null,
-      "Genre: ",
-      props.data.genre ? props.data.genre : "Unavailable"
-    ),
-    _react2.default.createElement("br", null),
-    _react2.default.createElement(
-      "span",
-      null,
-      props.data.permalink_url ? _react2.default.createElement(
-        "a",
-        { href: props.data.permalink_url, target: "_blank" },
-        "SoundCloud Link"
-      ) : "Unavailable"
-    )
-  );
-};
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SearchViewItem = function (_Component) {
+  _inherits(SearchViewItem, _Component);
+
+  function SearchViewItem(props) {
+    _classCallCheck(this, SearchViewItem);
+
+    var _this = _possibleConstructorReturn(this, (SearchViewItem.__proto__ || Object.getPrototypeOf(SearchViewItem)).call(this, props));
+
+    _this.handleClick = _this.handleClick.bind(_this);
+    return _this;
+  }
+
+  _createClass(SearchViewItem, [{
+    key: "handleClick",
+    value: function handleClick() {
+      this.props.playSongCB(this.props.data);
+    }
+  }, {
+    key: "render",
+    value: function render() {
+      var styling = {
+        marginBottom: 10
+      };
+
+      return _react2.default.createElement(
+        "div",
+        { onClick: this.handleClick, style: styling },
+        _react2.default.createElement(
+          "span",
+          null,
+          "Title: ",
+          this.props.data.title ? this.props.data.title : "Unavailable"
+        ),
+        _react2.default.createElement("br", null),
+        _react2.default.createElement(
+          "span",
+          null,
+          "Genre: ",
+          this.props.data.genre ? this.props.data.genre : "Unavailable"
+        ),
+        _react2.default.createElement("br", null),
+        _react2.default.createElement(
+          "span",
+          null,
+          this.props.data.permalink_url ? _react2.default.createElement(
+            "a",
+            { href: this.props.data.permalink_url, target: "_blank" },
+            "SoundCloud Link"
+          ) : "Unavailable"
+        )
+      );
+    }
+  }]);
+
+  return SearchViewItem;
+}(_react.Component);
 
 exports.default = SearchViewItem;
 
@@ -12690,12 +12722,14 @@ var App = function (_Component) {
     var _this = _possibleConstructorReturn(this, (App.__proto__ || Object.getPrototypeOf(App)).call(this, props));
 
     _this.state = {
-      firstSong: {},
+      playSong: 'https://soundcloud.com/fly-eye/awooga-1',
       searchResults: [],
+      songQueue: [],
       backupSong: 'https://soundcloud.com/fly-eye/awooga-1'
     };
     _this.handleSearch = _this.handleSearch.bind(_this);
     _this.getListOfSearchResults = _this.getListOfSearchResults.bind(_this);
+    _this.playNextSong = _this.playNextSong.bind(_this);
     return _this;
   }
 
@@ -12708,7 +12742,6 @@ var App = function (_Component) {
     key: 'getListOfSearchResults',
     value: function getListOfSearchResults(response) {
       var listOfSearchResults = [];
-
       var songObj = response.data.collection;
 
       if (songObj.length > 0) {
@@ -12716,12 +12749,21 @@ var App = function (_Component) {
           listOfSearchResults.push(song);
         });
       }
-
       console.log("listOfSearchResults is ", listOfSearchResults);
 
       this.setState({
         searchResults: listOfSearchResults
       });
+    }
+  }, {
+    key: 'playNextSong',
+    value: function playNextSong(song) {
+      console.log("Managed to get inside playNextSong");
+      console.log("song passed to playNextSong is ", song);
+
+      // this.setState({
+      //   playSong: urlString
+      // });
     }
   }, {
     key: 'componentDidMount',
@@ -12739,7 +12781,7 @@ var App = function (_Component) {
           { className: 'playerStyling' },
           _react2.default.createElement(_reactPlayer2.default, {
             soundcloudConfig: scConfig,
-            url: 'https://soundcloud.com/fly-eye/awooga-1',
+            url: this.state.playSong,
             controls: true,
             playing: true }),
           _react2.default.createElement(
@@ -12759,7 +12801,7 @@ var App = function (_Component) {
             'Search Results'
           ),
           _react2.default.createElement(_search2.default, { callback: this.handleSearch }),
-          _react2.default.createElement(_SearchView2.default, { listOfSongs: this.state.searchResults })
+          _react2.default.createElement(_SearchView2.default, { playSongCB: this.playNextSong, listOfSongs: this.state.searchResults })
         ),
         _react2.default.createElement('div', { className: 'clearFix' })
       );
@@ -30189,7 +30231,7 @@ var SongQueue = function SongQueue(props) {
     'div',
     null,
     props.listOfSongs.map(function (song, idx) {
-      return _react2.default.createElement(_SongQueueItem2.default, { key: song.id, data: song });
+      return _react2.default.createElement(_SongQueueItem2.default, { playSongCB: props.playSongCB, key: song.id, data: song });
     })
   );
 };

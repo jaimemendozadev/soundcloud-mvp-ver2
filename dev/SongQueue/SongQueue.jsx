@@ -8,7 +8,7 @@ const SongQueue = (props) => {
   return ( 
       <div>
       {props.listOfSongs.map((song, idx) => {
-        return <SongQueueItem key={song.id} data={song} />
+        return <SongQueueItem playSongCB={props.playSongCB} key={song.id} data={song} />
       })}
       </div>      
   )

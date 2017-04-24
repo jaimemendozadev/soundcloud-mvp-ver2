@@ -15,12 +15,14 @@ class App extends Component {
     constructor(props){
       super(props);
       this.state = {
-        firstSong: {},
+        playSong: 'https://soundcloud.com/fly-eye/awooga-1',
         searchResults: [],
+        songQueue: [],
         backupSong: 'https://soundcloud.com/fly-eye/awooga-1'
       }
       this.handleSearch = this.handleSearch.bind(this);
       this.getListOfSearchResults = this.getListOfSearchResults.bind(this);
+      this.playNextSong = this.playNextSong.bind(this);
     }
 
     handleSearch(string){      
@@ -29,7 +31,6 @@ class App extends Component {
 
     getListOfSearchResults(response){
       var listOfSearchResults = [];
-
       var songObj = response.data.collection;
 
       if(songObj.length > 0) {
@@ -37,14 +38,25 @@ class App extends Component {
           listOfSearchResults.push(song);
         });
       }
-
-
       console.log("listOfSearchResults is ", listOfSearchResults);
 
       this.setState({
         searchResults: listOfSearchResults
       });
     }
+
+    playNextSong(song){
+      console.log("Managed to get inside playNextSong");
+      console.log("song passed to playNextSong is ", song)
+
+      // this.setState({
+      //   playSong: urlString
+      // });
+
+    }
+
+
+
     
 
     componentDidMount(){
@@ -58,7 +70,7 @@ class App extends Component {
           <div className="playerStyling">
             <ReactPlayer 
               soundcloudConfig={scConfig} 
-              url={'https://soundcloud.com/fly-eye/awooga-1'} 
+              url={this.state.playSong} 
               controls={true}
               playing />
             
@@ -76,7 +88,7 @@ class App extends Component {
           <div className="searchStyling">
             <h1>Search Results</h1>
             <Search callback={this.handleSearch} />
-            <SearchView listOfSongs={this.state.searchResults} />
+            <SearchView playSongCB={this.playNextSong} listOfSongs={this.state.searchResults} />
           </div>
 
 
