@@ -8,7 +8,7 @@ const SearchView = (props) => {
   return ( 
       <div>
       {props.listOfSongs.map((song, idx) => {
-        return <SearchViewItem playSongCB={props.playSongCB} key={song.id} data={song} />
+        return <SearchViewItem addToQueueCB={props.addToQueueCB} key={song.id} data={song} />
       })}
       </div>      
   )

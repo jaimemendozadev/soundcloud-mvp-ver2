@@ -23,6 +23,7 @@ class App extends Component {
       this.handleSearch = this.handleSearch.bind(this);
       this.getListOfSearchResults = this.getListOfSearchResults.bind(this);
       this.playNextSong = this.playNextSong.bind(this);
+      this.addToSongQueue = this.addToSongQueue.bind(this);
     }
 
     handleSearch(string){      
@@ -46,14 +47,23 @@ class App extends Component {
     }
 
     playNextSong(song){
-      console.log("Managed to get inside playNextSong");
-      console.log("song passed to playNextSong is ", song)
-
-      // this.setState({
-      //   playSong: urlString
-      // });
+      this.setState({
+        playSong: song.permalink_url
+      });
 
     }
+
+    addToSongQueue(song){
+      var newQueue = this.state.songQueue;
+      newQueue.push(song);
+
+      this.setState({
+        songQueue: newQueue
+      })
+
+    }
+
+
 
 
 
@@ -78,7 +88,7 @@ class App extends Component {
 
             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate ex, minima ipsum similique eaque, ipsa, reprehenderit nam blanditiis omnis facilis necessitatibus corporis aperiam deleniti. Quas, quod, assumenda. Dignissimos, nisi, possimus.
 
-           <SongQueue />
+           <SongQueue queueList={this.state.songQueue} playSongCB={this.playNextSong} />
 
             
           </div>
@@ -88,7 +98,7 @@ class App extends Component {
           <div className="searchStyling">
             <h1>Search Results</h1>
             <Search callback={this.handleSearch} />
-            <SearchView playSongCB={this.playNextSong} listOfSongs={this.state.searchResults} />
+            <SearchView addToQueueCB={this.addToSongQueue} listOfSongs={this.state.searchResults} />
           </div>
 
 
