@@ -24,9 +24,6 @@ module.exports = {
 
   axiosPOSTPlaylist: function(newPlaylist){
     
-
-    //search for track with searchString
-    //current search query doesn't include a date range
     axios.post('/api/aplaylist', newPlaylist)
       .then( (response) => {
         console.log("results inside axiosPOSTPlaylist is ", JSON.stringify(response));
@@ -36,7 +33,6 @@ module.exports = {
       .catch( (error) => {
         console.log(error);
       }); 
-
 
   }
 }

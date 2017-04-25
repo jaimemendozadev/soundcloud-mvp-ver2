@@ -31,6 +31,8 @@ module.exports = {
     }
 
 
+
+
     model.postAPlayList(newPlaylist, function(err, savedPlaylist){
       if(err){
         console.log("There was an err saving the playlist to the db. ", err);
@@ -40,6 +42,8 @@ module.exports = {
       res.status(201).send("Successfully saved a new playlist to the database")
 
     });
+
+
 
   },
 

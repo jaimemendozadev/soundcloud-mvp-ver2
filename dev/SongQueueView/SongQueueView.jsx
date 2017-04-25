@@ -5,9 +5,10 @@ class SongQueue extends Component {
   constructor(props){
     super(props);
     this.state = {
-      SongQueueFormInput: 'Enter the SongQueue Name...'
+      SongQueueFormInput: 'Enter New Playlist Name...'
     }
     this.handleFormChange = this.handleFormChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
 
   }
 
@@ -18,26 +19,41 @@ class SongQueue extends Component {
     });
 
   }
-  
-  
 
-  //onClick={this.createPlaylistFromSongQueue}
+  handleSubmit(event){
+    event.preventDefault();
 
+    var playlistName = this.state.SongQueueFormInput;
+    this.props.cbObj.createPlaylist(playlistName);
+    
+
+
+  }
+  
   render(){
-    if (!this.props.queueList) {
-      return <h3>Waiting for data...</h3>
+    if (this.props.queueList.length === 0) {
+      return(
+        <div>
+          <h1>SongQueue</h1>
+          <h4>Click on a search result to start filling the queue!</h4>
+        </div>
+      )   
     }
 
     return ( 
       
       <div>
         <h1>SongQueue</h1>
-        <form>
+        <form onSubmit={this.handleSubmit}>
           <input onChange={this.handleFormChange} type="text" value={this.state.SongQueueFormInput} />
           <button type="submit">Save SongQueue As Playlist?</button>
         </form>
 
-        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate ex, minima ipsum similique eaque, ipsa, reprehenderit nam blanditiis omnis facilis necessitatibus corporis aperiam deleniti. Quas, quod, assumenda. Dignissimos, nisi, possimus.</p>
+        <br />
+
+        <h4>Save your current SongQueue as a playlist by filling out the form and clicking the Save button!</h4>
+
+       
       
         {this.props.queueList.map((song, idx) => {
           return <SongQueueViewItem cbObj={this.props.cbObj} key={song.id} data={song} />

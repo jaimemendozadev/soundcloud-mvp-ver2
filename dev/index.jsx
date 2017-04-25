@@ -32,6 +32,7 @@ class App extends Component {
       this.playSongFromQueue = this.playSongFromQueue.bind(this);
 
       this.cbObj = {
+        createPlaylist: this.createPlaylistFromSongQueue,
         remove: this.removeFromQueue,
         clickToPlay: this.clickToPlaySong,
       }
@@ -63,16 +64,18 @@ class App extends Component {
       });
     }
 
-    createPlaylistFromSongQueue(){
+    createPlaylistFromSongQueue(playlistName){
       console.log("inside createPlaylistFromSongQueue");
 
 
-      // var newPlaylist = {
-      //   title: someString,
-      //   songs: this.state.songQueue
-      // }
+      var newPlaylist = {
+        title: playlistName,
+        songs: this.state.songQueue
+      }
 
-      // helper.axiosPOSTPlaylist(newPlaylist);
+      console.log("newlycreated playlist is ", newPlaylist);
+
+      helper.axiosPOSTPlaylist(newPlaylist);
 
 
     }

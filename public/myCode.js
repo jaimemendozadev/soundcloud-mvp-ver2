@@ -11328,9 +11328,10 @@ var SongQueue = function (_Component) {
     var _this = _possibleConstructorReturn(this, (SongQueue.__proto__ || Object.getPrototypeOf(SongQueue)).call(this, props));
 
     _this.state = {
-      SongQueueFormInput: 'Enter the SongQueue Name...'
+      SongQueueFormInput: 'Enter New Playlist Name...'
     };
     _this.handleFormChange = _this.handleFormChange.bind(_this);
+    _this.handleSubmit = _this.handleSubmit.bind(_this);
 
     return _this;
   }
@@ -11343,19 +11344,33 @@ var SongQueue = function (_Component) {
         SongQueueFormInput: event.target.value
       });
     }
+  }, {
+    key: 'handleSubmit',
+    value: function handleSubmit(event) {
+      event.preventDefault();
 
-    //onClick={this.createPlaylistFromSongQueue}
-
+      var playlistName = this.state.SongQueueFormInput;
+      this.props.cbObj.createPlaylist(playlistName);
+    }
   }, {
     key: 'render',
     value: function render() {
       var _this2 = this;
 
-      if (!this.props.queueList) {
+      if (this.props.queueList.length === 0) {
         return _react2.default.createElement(
-          'h3',
+          'div',
           null,
-          'Waiting for data...'
+          _react2.default.createElement(
+            'h1',
+            null,
+            'SongQueue'
+          ),
+          _react2.default.createElement(
+            'h4',
+            null,
+            'Click on a search result to start filling the queue!'
+          )
         );
       }
 
@@ -11369,7 +11384,7 @@ var SongQueue = function (_Component) {
         ),
         _react2.default.createElement(
           'form',
-          null,
+          { onSubmit: this.handleSubmit },
           _react2.default.createElement('input', { onChange: this.handleFormChange, type: 'text', value: this.state.SongQueueFormInput }),
           _react2.default.createElement(
             'button',
@@ -11377,10 +11392,11 @@ var SongQueue = function (_Component) {
             'Save SongQueue As Playlist?'
           )
         ),
+        _react2.default.createElement('br', null),
         _react2.default.createElement(
-          'p',
+          'h4',
           null,
-          'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate ex, minima ipsum similique eaque, ipsa, reprehenderit nam blanditiis omnis facilis necessitatibus corporis aperiam deleniti. Quas, quod, assumenda. Dignissimos, nisi, possimus.'
+          'Save your current SongQueue as a playlist by filling out the form and clicking the Save button!'
         ),
         this.props.queueList.map(function (song, idx) {
           return _react2.default.createElement(_SongQueueViewItem2.default, { cbObj: _this2.props.cbObj, key: song.id, data: song });
@@ -11423,8 +11439,6 @@ module.exports = {
 
   axiosPOSTPlaylist: function axiosPOSTPlaylist(newPlaylist) {
 
-    //search for track with searchString
-    //current search query doesn't include a date range
     axios.post('/api/aplaylist', newPlaylist).then(function (response) {
       console.log("results inside axiosPOSTPlaylist is ", JSON.stringify(response));
       console.log("");
@@ -12788,6 +12802,7 @@ var App = function (_Component) {
     _this.playSongFromQueue = _this.playSongFromQueue.bind(_this);
 
     _this.cbObj = {
+      createPlaylist: _this.createPlaylistFromSongQueue,
       remove: _this.removeFromQueue,
       clickToPlay: _this.clickToPlaySong
     };
@@ -12824,16 +12839,17 @@ var App = function (_Component) {
     }
   }, {
     key: 'createPlaylistFromSongQueue',
-    value: function createPlaylistFromSongQueue() {
+    value: function createPlaylistFromSongQueue(playlistName) {
       console.log("inside createPlaylistFromSongQueue");
 
-      // var newPlaylist = {
-      //   title: someString,
-      //   songs: this.state.songQueue
-      // }
+      var newPlaylist = {
+        title: playlistName,
+        songs: this.state.songQueue
+      };
 
-      // helper.axiosPOSTPlaylist(newPlaylist);
+      console.log("newlycreated playlist is ", newPlaylist);
 
+      helper.axiosPOSTPlaylist(newPlaylist);
     }
 
     /*********************
