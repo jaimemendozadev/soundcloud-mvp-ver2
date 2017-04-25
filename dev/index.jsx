@@ -53,10 +53,6 @@ class App extends Component {
       if(songObj.length > 0) {
         songObj.forEach((song) => {
 
-          console.log("the song.created_at date is ", song.created_at)
-          console.log("")
-
-
           listOfSearchResults.push(song);
         });
       }
@@ -201,8 +197,22 @@ class App extends Component {
 
            <SongQueueView queueList={this.state.songQueue} cbObj={this.cbObj} />
 
+           <h1>PlayList</h1>
+           <button>Load Your Playlist?</button>
+
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate ex, minima ipsum similique eaque, ipsa, reprehenderit nam blanditiis omnis facilis necessitatibus corporis aperiam deleniti. Quas, quod, assumenda. Dignissimos, nisi, possimus.</p>
+
+
+
+
+
+
             
           </div>
+
+
+
+
 
 
 

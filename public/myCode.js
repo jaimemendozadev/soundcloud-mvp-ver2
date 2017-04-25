@@ -12560,9 +12560,6 @@ var App = function (_Component) {
       if (songObj.length > 0) {
         songObj.forEach(function (song) {
 
-          console.log("the song.created_at date is ", song.created_at);
-          console.log("");
-
           listOfSearchResults.push(song);
         });
       }
@@ -12723,7 +12720,22 @@ var App = function (_Component) {
             null,
             'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate ex, minima ipsum similique eaque, ipsa, reprehenderit nam blanditiis omnis facilis necessitatibus corporis aperiam deleniti. Quas, quod, assumenda. Dignissimos, nisi, possimus.'
           ),
-          _react2.default.createElement(_SongQueueView2.default, { queueList: this.state.songQueue, cbObj: this.cbObj })
+          _react2.default.createElement(_SongQueueView2.default, { queueList: this.state.songQueue, cbObj: this.cbObj }),
+          _react2.default.createElement(
+            'h1',
+            null,
+            'PlayList'
+          ),
+          _react2.default.createElement(
+            'button',
+            null,
+            'Load Your Playlist?'
+          ),
+          _react2.default.createElement(
+            'p',
+            null,
+            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate ex, minima ipsum similique eaque, ipsa, reprehenderit nam blanditiis omnis facilis necessitatibus corporis aperiam deleniti. Quas, quod, assumenda. Dignissimos, nisi, possimus.'
+          )
         ),
         _react2.default.createElement(
           'div',
