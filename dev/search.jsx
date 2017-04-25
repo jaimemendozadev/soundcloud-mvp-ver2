@@ -4,14 +4,13 @@ class Search extends Component {
   constructor(props){
     super(props)
     this.state= {
-      inputField: "Enter Artist or Song Name..."
+      inputField: "Enter Song or Artist..."
     }
     this.handleInput = this.handleInput.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleInput(event){
-    console.log("the text is ", event.target.value);
     this.setState({
       inputField: event.target.value
     })
@@ -33,7 +32,8 @@ class Search extends Component {
 
           <button>Submit</button>
         </form>
-      <h3>Click on a search result to add it to the SongQueue</h3>
+      <h3>Click on a search result to add it to the SongQueue<br />
+      Scroll to view your search results!</h3>
       </div>
     );
   }

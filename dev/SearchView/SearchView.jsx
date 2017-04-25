@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ListItem from '../ListItem.jsx';
+import SearchViewItem from './SearchViewItem.jsx';
 
 
 const SearchView = (props) => {
@@ -7,9 +7,9 @@ const SearchView = (props) => {
     return <h3>Waiting for data...</h3>
   }
   return ( 
-      <div>
+      <div className="searchResultsStyling">
       {props.listOfSongs.map((song, idx) => {
-        return <ListItem invokeCB={props.addToQueueCB} key={song.id} data={song} />
+        return <SearchViewItem invokeCB={props.addToQueueCB} key={song.id} data={song} />
       })}
       </div>      
   )

@@ -83,12 +83,21 @@ class App extends Component {
      * ListItem callbacks
      *********************/
     addToSongQueue(song){
-      var newQueue = this.state.songQueue;
-      newQueue.push(song);
 
-      this.setState({
-        songQueue: newQueue,
-      });
+      var songQueueIDs = this.state.songQueue.map((song) => song.id);
+
+      if (!songQueueIDs.includes(song.id)){
+        var newQueue = this.state.songQueue;
+        newQueue.push(song);
+        
+        this.setState({
+          songQueue: newQueue,
+        });
+      }
+
+
+
+      
 
     }
 
@@ -201,7 +210,10 @@ class App extends Component {
       return (
         
         <div>
-          <div className="playerStyling">
+          <div className="jumbotron">
+            <h2>Read.io - Personalized audio made ready just for you.</h2>
+          </div>
+          <div className="playerStyling col-md-6">
             <div>
               <ReactPlayer 
                 soundcloudConfig={scConfig} 
@@ -215,15 +227,7 @@ class App extends Component {
 
            <SongQueueView queueList={this.state.songQueue} cbObj={this.cbObj} />
 
-
-
            <PlayListView transferToQueueCB={this.putPlayListInQueue} />
-
-           {/*<h1>PlayList</h1>
-           <button>Load Your Playlist?</button>
-
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate ex, minima ipsum similique eaque, ipsa, reprehenderit nam blanditiis omnis facilis necessitatibus corporis aperiam deleniti. Quas, quod, assumenda. Dignissimos, nisi, possimus.</p>*/}
-
             
           </div>
 
@@ -231,7 +235,7 @@ class App extends Component {
 
 
 
-          <div className="searchStyling">
+          <div className="searchStyling col-md-6">
             
             <h1>Search Results</h1>
             <Search callback={this.handleSearch} />

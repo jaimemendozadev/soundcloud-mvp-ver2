@@ -2,17 +2,33 @@ html {
   font-size: 16px
 }
 
+.jumbotron {
+  /* Permalink - use to edit and share this gradient: http://colorzilla.com/gradient-editor/#febbbb+0,fe9090+75,ff5c5c+100 */
+  background: rgb(254,187,187); /* Old browsers */
+  background: -moz-linear-gradient(left, rgba(254,187,187,1) 0%, rgba(254,144,144,1) 75%, rgba(255,92,92,1) 100%); /* FF3.6-15 */
+  background: -webkit-linear-gradient(left, rgba(254,187,187,1) 0%,rgba(254,144,144,1) 75%,rgba(255,92,92,1) 100%); /* Chrome10-25,Safari5.1-6 */
+  background: linear-gradient(to right, rgba(254,187,187,1) 0%,rgba(254,144,144,1) 75%,rgba(255,92,92,1) 100%); /* W3C, IE10+, FF16+, Chrome26+, Opera12+, Safari7+ */
+  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#febbbb', endColorstr='#ff5c5c',GradientType=1 ); /* IE6-9 */
+}
+
 .playerStyling {
-  width: 50%;
   float: left;
-  margin: 0 1em 0 0;
+  width: 60%
 }
 
 .searchStyling {
-  width: 40%;
   float: right;
-  margin: 0 0 1em 0;
+  width: 40%
+  
 }
+
+.searchResultsStyling {
+
+  height: 800px;
+  overflow: scroll;
+
+}
+
 
 .clearFix::after {
   content: "";
@@ -21,20 +37,10 @@ html {
 }
 
 span {
-  font-size: 1.3em;
+  font-size: 1.2em;
 }
 
 
 .searchSpan {
   margin: 10 0;
 }
-
-/*
-.searchSpan:active {
-  background-color: pink
-}
-
-.searchSpan:hover {
-  background-color: gray;
-  
-}*/

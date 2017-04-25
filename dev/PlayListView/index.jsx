@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import PlayListViewItem from './PlayListViewItem.jsx';
-import ListItem from '../ListItem.jsx';
 var axios = require('axios');
 
 
@@ -80,7 +79,8 @@ class PlayListView extends Component {
         <button onClick={this.getThePlaylists}>Get Your Playlists!</button>
 
         <br />
-        <h3>Click on the button to retrieve more PlayLists from the database! :) </h3>
+        <h3>Click on the button to retrieve more<br /> 
+        PlayLists from the database! :) </h3>
 
        
       
