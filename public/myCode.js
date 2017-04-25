@@ -12520,7 +12520,7 @@ var App = function (_Component) {
       playSong: null,
       searchResults: [],
       songQueue: [],
-      idOfQueueSongInPlayer: null,
+      idOfSongInPlayer: null,
       backupSong: 'https://soundcloud.com/fly-eye/awooga-1'
     };
 
@@ -12583,30 +12583,52 @@ var App = function (_Component) {
         songQueue: newQueue
       });
     }
+
+    /*Note:
+    removeFromQueue prevents user from deleting
+    song in queue that's currently in ReactPlayer.
+    Prevents songQueue from going out of order.
+    */
+
   }, {
     key: 'removeFromQueue',
     value: function removeFromQueue(song) {
-      var filterID = song.id;
-      var toRemove = this.state.songQueue;
+      if (song.id !== this.state.idOfSongInPlayer) {
+        var filterID = song.id;
+        var toRemove = this.state.songQueue;
 
-      var newQueue = toRemove.filter(function (song) {
-        return song.id !== filterID;
-      });
+        var newQueue = toRemove.filter(function (song) {
+          return song.id !== filterID;
+        });
 
-      this.setState({
-        songQueue: newQueue
-      });
+        this.setState({
+          songQueue: newQueue
+        });
+      }
     }
+
+    /*
+    clicking this song in the queue also
+    sets the idOfSongInPlayer 
+    */
+
   }, {
     key: 'clickToPlaySong',
     value: function clickToPlaySong(song) {
+
       this.setState({
-        playSong: song
+        playSong: song,
+        idOfSongInPlayer: song.id
       });
     }
 
-    //callback for ReactPlayer onEnded event ONLY 
-    //playSongFromQueue DOES NOT DELETE ITEMS from SongQueue
+    /*NOTE
+    callback for ReactPlayer onEnded event ONLY 
+    
+    playSongFromQueue DOES NOT DELETE ITEMS from SongQueue
+     If the song in the player ends and there's nothing in the 
+    queue, user gets no error.
+    */
 
   }, {
     key: 'playSongFromQueue',
@@ -12615,25 +12637,27 @@ var App = function (_Component) {
       if (this.state.songQueue.length > 0) {
 
         //if ReactPlayer has previously played songs from the Queue
-        if (this.state.idOfQueueSongInPlayer !== null) {
-          var oldID = this.state.idOfQueueSongInPlayer;
+        if (this.state.idOfSongInPlayer !== null) {
+          var oldID = this.state.idOfSongInPlayer;
           var queue = this.state.songQueue;
 
           var foundIdx;
           var newID;
 
           queue.forEach(function (song, idx) {
-            //when you find the last song's ID in the queue
-            //make sure there's an actual next song to play
-            //in the quque
+            /*
+              when you find the last song's ID in the queue
+              make sure there's an actual next song to play
+              in the quque
+            */
             if (song.id === oldID && idx + 1 !== queue.length) foundIdx = idx + 1;
           });
 
-          //set state of idOfQueueSongInPlayer & playSong 
+          //set state of idOfSongInPlayer & playSong 
           newID = queue[foundIdx].id;
 
           this.setState({
-            idOfQueueSongInPlayer: newID,
+            idOfSongInPlayer: newID,
             playSong: queue[foundIdx]
           });
 
