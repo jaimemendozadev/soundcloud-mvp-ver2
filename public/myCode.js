@@ -11369,7 +11369,7 @@ var SongQueue = function (_Component) {
           _react2.default.createElement(
             'h4',
             null,
-            'Click on a search result to start filling the queue!'
+            'Whoops! Your SongQueue is empty. Search and Click for a Song!'
           )
         );
       }
@@ -11509,13 +11509,22 @@ var Search = function (_Component) {
     key: "render",
     value: function render() {
       return _react2.default.createElement(
-        "form",
-        { onSubmit: this.handleSubmit },
-        _react2.default.createElement("input", { onChange: this.handleInput, type: "text", value: this.state.inputField }),
+        "div",
+        null,
         _react2.default.createElement(
-          "button",
+          "form",
+          { onSubmit: this.handleSubmit },
+          _react2.default.createElement("input", { onChange: this.handleInput, type: "text", value: this.state.inputField }),
+          _react2.default.createElement(
+            "button",
+            null,
+            "Submit"
+          )
+        ),
+        _react2.default.createElement(
+          "h3",
           null,
-          "Submit"
+          "Click on a search result to add it to the SongQueue"
         )
       );
     }
@@ -12613,8 +12622,8 @@ var ListItem = function ListItem(props) {
   };
 
   var styling = {
-    marginTop: 10,
-    marginBottom: 10
+    marginTop: 15,
+    marginBottom: 15
   };
 
   return _react2.default.createElement(

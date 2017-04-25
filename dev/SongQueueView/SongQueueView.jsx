@@ -35,7 +35,7 @@ class SongQueue extends Component {
       return(
         <div>
           <h1>SongQueue</h1>
-          <h4>Click on a search result to start filling the queue!</h4>
+          <h4>Whoops! Your SongQueue is empty. Search and Click for a Song!</h4>
         </div>
       )   
     }

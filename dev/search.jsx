@@ -27,14 +27,14 @@ class Search extends Component {
 
   render(){
     return (
-      <form onSubmit={this.handleSubmit}>
-        <input onChange={this.handleInput} type="text" value={this.state.inputField} />
-        
-        {/*Why does it work with an onClick and not an onSubmit?*/}
-        {/*<button onClick={this.handleSubmit}>Submit</button>*/}
+      <div>
+        <form onSubmit={this.handleSubmit}>
+          <input onChange={this.handleInput} type="text" value={this.state.inputField} />
 
-        <button>Submit</button>
-      </form>
+          <button>Submit</button>
+        </form>
+      <h3>Click on a search result to add it to the SongQueue</h3>
+      </div>
     );
   }
 }

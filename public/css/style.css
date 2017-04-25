@@ -1,3 +1,7 @@
+html {
+  font-size: 16px
+}
+
 .playerStyling {
   width: 50%;
   float: left;
@@ -15,3 +19,22 @@
   display: table; 
   clear: both;
 }
+
+span {
+  font-size: 1.3em;
+}
+
+
+.searchSpan {
+  margin: 10 0;
+}
+
+/*
+.searchSpan:active {
+  background-color: pink
+}
+
+.searchSpan:hover {
+  background-color: gray;
+  
+}*/

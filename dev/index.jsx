@@ -231,14 +231,17 @@ class App extends Component {
 
 
 
-
-
           <div className="searchStyling">
+            
             <h1>Search Results</h1>
             <Search callback={this.handleSearch} />
 
             <SearchView addToQueueCB={this.addToSongQueue} listOfSongs={this.state.searchResults} />
           </div>
+
+
+
+
 
 
           <div className="clearFix">

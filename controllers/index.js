@@ -69,6 +69,9 @@ Working routes/controllers
   -controller.getAllPlayLists
   -controller.postAPlayList 
     -postAPlayList successfully saves actual SoundCloud data to db
+  
+  -controller.deleteAPlayList
+    -uses req.params to get ID for deletion
 
 
     
