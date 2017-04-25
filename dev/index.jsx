@@ -9,10 +9,6 @@ const helper = require('./helpers/index.jsx');
 const scConfig = require('../config.js');
 
 
-//playerSong: "https://api.soundcloud.com/tracks/18952266/stream",  
-//hardCoded starter song: https://soundcloud.com/fly-eye/awooga-1
-
-
 class App extends Component {
     constructor(props){
       super(props);
@@ -20,6 +16,7 @@ class App extends Component {
         playSong: null,
         searchResults: [],
         songQueue: [],
+        idOfQueueSongInPlayer: null,
         backupSong: 'https://soundcloud.com/fly-eye/awooga-1'
       }
       
@@ -31,7 +28,7 @@ class App extends Component {
       this.addToSongQueue = this.addToSongQueue.bind(this);
       this.removeFromQueue = this.removeFromQueue.bind(this);
       this.clickToPlaySong = this.clickToPlaySong.bind(this);
-      this.putSongInPlayer = this.putSongInPlayer.bind(this);
+      this.playSongFromQueue = this.playSongFromQueue.bind(this);
 
       this.cbObj = {
         remove: this.removeFromQueue,
@@ -58,13 +55,11 @@ class App extends Component {
           listOfSearchResults.push(song);
         });
       }
-      console.log("listOfSearchResults is ", listOfSearchResults);
 
       this.setState({
         searchResults: listOfSearchResults
       });
     }
-
 
 
     /*********************
@@ -76,16 +71,11 @@ class App extends Component {
 
       this.setState({
         songQueue: newQueue
-      })
+      });
 
     }
 
     removeFromQueue(song){
-      //FIX THIS RIGHT NOW
-      console.log("inside removeFromQueue func")
-      console.log(song);
-      console.log("the old queue is ", this.state.songQueue)
-
       var filterID = song.id;
       var toRemove = this.state.songQueue;
 
@@ -93,23 +83,12 @@ class App extends Component {
         return song.id !== filterID;
       });
 
-      console.log("the new queue is ", newQueue);
-
       this.setState({
         songQueue: newQueue
-      })
-
-
-
-
-
-
-
+      });
     }
 
     clickToPlaySong(song){
-      console.log("inside clickToPlaySong")
-      console.log("song is ", song)
       this.setState({
         playSong: song
       });
@@ -117,7 +96,51 @@ class App extends Component {
 
 
     //callback for ReactPlayer onEnded event ONLY 
-    putSongInPlayer(song){
+    //playSongFromQueue DOES NOT DELETE ITEMS from SongQueue
+    playSongFromQueue(){
+      //if the songQueue is not empty
+      if(this.state.songQueue.length > 0) {
+        
+        //if ReactPlayer has previously played songs from the Queue
+        if (this.state.idOfQueueSongInPlayer !== null) {
+          var oldID = this.state.idOfQueueSongInPlayer;
+          var queue = this.state.songQueue;
+
+          var foundIdx;
+          var newID;
+
+          queue.forEach((song, idx) => {
+            //when you find the last song's ID in the queue
+            //make sure there's an actual next song to play
+            //in the quque
+            if (song.id === oldID && (idx + 1 !== queue.length))
+              foundIdx = idx + 1;
+          });
+
+          //set state of idOfQueueSongInPlayer & playSong 
+          newID = queue[foundIdx].id;
+
+          this.setState({
+            idOfQueueSongInPlayer: newID,
+            playSong: queue[foundIdx]
+          });
+
+        //else if there are songs in the queue and 
+        //we're playing from the queue for the first time
+        } else if (this.state.idOfQueueSongInPlayer === null)  {
+
+          var queue = this.state.songQueue;
+
+          this.setState({
+            idOfQueueSongInPlayer: queue[0].id,
+            playSong: queue[0]
+          });
+
+        }
+
+      }
+
+
       this.setState({
         playSong: song
       })
@@ -139,14 +162,16 @@ class App extends Component {
                 soundcloudConfig={scConfig} 
                 url={!this.state.playSong ? this.state.backupSong : this.state.playSong.permalink_url} 
                 controls={true}
+                onEnded={}
                 playing />
 
                 <h1>Now Playing: {!this.state.playSong ? "Untitled" : this.state.playSong.title }</h1>
             </div>
             
             <h1>SongQueue</h1>
+            <button>Save SongQueue As Playlist?</button>
 
-            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate ex, minima ipsum similique eaque, ipsa, reprehenderit nam blanditiis omnis facilis necessitatibus corporis aperiam deleniti. Quas, quod, assumenda. Dignissimos, nisi, possimus.
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate ex, minima ipsum similique eaque, ipsa, reprehenderit nam blanditiis omnis facilis necessitatibus corporis aperiam deleniti. Quas, quod, assumenda. Dignissimos, nisi, possimus.</p>
 
            <SongQueueView queueList={this.state.songQueue} cbObj={this.cbObj} />
 
