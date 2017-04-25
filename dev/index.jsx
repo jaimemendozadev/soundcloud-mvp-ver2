@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import axios from 'axios';
 import ReactPlayer from 'react-player';
+import PlayListView from './PlayListView/index.jsx';
 import Search from './search.jsx';
 import SearchView from './SearchView/SearchView.jsx';
 import SongQueueView from './SongQueueView/SongQueueView.jsx'
@@ -212,10 +213,14 @@ class App extends Component {
 
            <SongQueueView queueList={this.state.songQueue} cbObj={this.cbObj} />
 
-           <h1>PlayList</h1>
+
+
+           <PlayListView />
+
+           {/*<h1>PlayList</h1>
            <button>Load Your Playlist?</button>
 
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate ex, minima ipsum similique eaque, ipsa, reprehenderit nam blanditiis omnis facilis necessitatibus corporis aperiam deleniti. Quas, quod, assumenda. Dignissimos, nisi, possimus.</p>
+            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate ex, minima ipsum similique eaque, ipsa, reprehenderit nam blanditiis omnis facilis necessitatibus corporis aperiam deleniti. Quas, quod, assumenda. Dignissimos, nisi, possimus.</p>*/}
 
             
           </div>

@@ -11428,8 +11428,8 @@ module.exports = {
     //search for track with searchString
     //current search query doesn't include a date range
     axios.get('' + scConfig.trackQuery + scConfig.clientId + '&q=' + searchString + scConfig.partion).then(function (response) {
-      console.log("results inside axios is ", JSON.stringify(response));
-      console.log("");
+      // console.log("results inside axios is ", JSON.stringify(response));
+      // console.log("");
 
       callback(response);
     }).catch(function (error) {
@@ -11446,6 +11446,7 @@ module.exports = {
       console.log(error);
     });
   }
+
 };
 
 /***/ }),
@@ -12751,6 +12752,10 @@ var _reactPlayer = __webpack_require__(108);
 
 var _reactPlayer2 = _interopRequireDefault(_reactPlayer);
 
+var _index = __webpack_require__(252);
+
+var _index2 = _interopRequireDefault(_index);
+
 var _search = __webpack_require__(106);
 
 var _search2 = _interopRequireDefault(_search);
@@ -12989,21 +12994,7 @@ var App = function (_Component) {
             )
           ),
           _react2.default.createElement(_SongQueueView2.default, { queueList: this.state.songQueue, cbObj: this.cbObj }),
-          _react2.default.createElement(
-            'h1',
-            null,
-            'PlayList'
-          ),
-          _react2.default.createElement(
-            'button',
-            null,
-            'Load Your Playlist?'
-          ),
-          _react2.default.createElement(
-            'p',
-            null,
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate ex, minima ipsum similique eaque, ipsa, reprehenderit nam blanditiis omnis facilis necessitatibus corporis aperiam deleniti. Quas, quod, assumenda. Dignissimos, nisi, possimus.'
-          )
+          _react2.default.createElement(_index2.default, null)
         ),
         _react2.default.createElement(
           'div',
@@ -30270,6 +30261,162 @@ var toString = {}.toString;
 module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
+
+
+/***/ }),
+/* 252 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+var _react = __webpack_require__(7);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _PlayListViewItem = __webpack_require__(253);
+
+var _PlayListViewItem2 = _interopRequireDefault(_PlayListViewItem);
+
+var _ListItem = __webpack_require__(126);
+
+var _ListItem2 = _interopRequireDefault(_ListItem);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var axios = __webpack_require__(63);
+
+var PlayListView = function (_Component) {
+  _inherits(PlayListView, _Component);
+
+  function PlayListView(props) {
+    _classCallCheck(this, PlayListView);
+
+    var _this = _possibleConstructorReturn(this, (PlayListView.__proto__ || Object.getPrototypeOf(PlayListView)).call(this, props));
+
+    _this.state = {
+      playlists: []
+
+    };
+    //this.handleFormChange = this.handleFormChange.bind(this);
+    _this.getThePlaylists = _this.getThePlaylists.bind(_this);
+
+    return _this;
+  }
+
+  // handleFormChange(event){
+
+  //   this.setState({
+  //     SongQueueFormInput: event.target.value
+  //   });
+
+  // }
+
+  _createClass(PlayListView, [{
+    key: 'getThePlaylists',
+    value: function getThePlaylists() {
+      axios.get('/api/allplaylists').then(function (allPlaylists) {
+        console.log("results inside getThePlaylists for PlayListView is ", JSON.stringify(allPlaylists));
+        console.log("");
+
+        // this.setState({
+        //   playlists: allPlaylists    
+        // });
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
+  }, {
+    key: 'componentDidMount',
+    value: function componentDidMount() {
+
+      axios.get('/api/allplaylists').then(function (allPlaylists) {
+        console.log("playlists retrieved from component did mount", JSON.stringify(allPlaylists));
+        console.log("");
+
+        // this.setState({
+        //   playlists: allPlaylists    
+        // });
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
+  }, {
+    key: 'render',
+    value: function render() {
+      if (this.state.playlists.length === 0) {
+        return _react2.default.createElement(
+          'div',
+          null,
+          _react2.default.createElement(
+            'h1',
+            null,
+            'PlayList'
+          ),
+          _react2.default.createElement(
+            'button',
+            { onClick: this.getThePlaylists },
+            'Load Your Playlist?'
+          ),
+          _react2.default.createElement('br', null),
+          _react2.default.createElement(
+            'h3',
+            null,
+            'Click on the button to retrieve your PlayLists from the database! :) '
+          )
+        );
+      }
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'h1',
+          null,
+          'PlayList'
+        ),
+        _react2.default.createElement(
+          'button',
+          { onClick: this.getThePlaylists },
+          'Get Your Playlists!'
+        ),
+        _react2.default.createElement('br', null),
+        _react2.default.createElement(
+          'h3',
+          null,
+          'Click on the button to retrieve more PlayLists from the database! :) '
+        ),
+        this.state.playlists.map(function (song, idx) {
+          return _react2.default.createElement(_PlayListViewItem2.default, { key: song.id, data: song });
+        })
+      );
+    }
+  }]);
+
+  return PlayListView;
+}(_react.Component);
+
+exports.default = PlayListView;
+
+//cbObj={this.props.cbObj}
+
+/***/ }),
+/* 253 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 
 
 /***/ })

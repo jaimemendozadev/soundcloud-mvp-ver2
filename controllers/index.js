@@ -18,8 +18,6 @@ module.exports = {
   getAPlayList: function(req, res) {
     res.send("controller.getAPlayList works")
     
-    
-
   },
 
   postAPlayList: function(req, res) {
@@ -60,6 +58,7 @@ Checklist
 Working routes/controllers
   -controller.getAllPlayLists
   -controller.postAPlayList 
+    -postAPlayList successfully saves actual SoundCloud data to db
 */
 
 
