@@ -2,12 +2,23 @@ var model = require('../models');
 
 module.exports = {
   getAllPlayLists: function(req, res) {
-    res.send("controller.getAllPlayLists works");
+    //res.send("controller.getAllPlayLists works");
+
+    model.getAllPlayLists(function(err, allPlaylists){
+      if(err){
+        console.log("There was an err getting all the playlists ", err);
+        res.status(404).send("There was an err getting all the playlists.");
+      }
+
+      res.status(201).send(allPlaylists);
+    });
 
   },
 
   getAPlayList: function(req, res) {
     res.send("controller.getAPlayList works")
+    
+    
 
   },
 
@@ -43,7 +54,8 @@ module.exports = {
 /*
 Checklist
 Working routes/controllers
-    - controller.postAPlayList 
+  -controller.getAllPlayLists
+  -controller.postAPlayList 
 */
 
 
