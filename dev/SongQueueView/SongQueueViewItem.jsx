@@ -8,17 +8,11 @@ const SongQueueViewItem = (props) => {
     }
 
     const removeFromQueue = () => {
-      console.log("inside songqueue removeFromQueue")
-      console.log(props.cbObj)
       props.cbObj.remove(props.data);
-
     }
 
     const clickToPlaySong = () => {
-      //console.log("inside songqueue clickToPlaySong")
-      console.log("props song is", props.data)
       props.cbObj.clickToPlay(props.data);
-
     }
 
     return ( 

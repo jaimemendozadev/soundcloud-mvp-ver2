@@ -31,6 +31,7 @@ class App extends Component {
       this.removeFromQueue = this.removeFromQueue.bind(this);
       this.clickToPlaySong = this.clickToPlaySong.bind(this);
       this.playSongFromQueue = this.playSongFromQueue.bind(this);
+      this.putPlayListInQueue = this.putPlayListInQueue.bind(this);
 
       this.cbObj = {
         createPlaylist: this.createPlaylistFromSongQueue,
@@ -66,18 +67,12 @@ class App extends Component {
     }
 
     createPlaylistFromSongQueue(playlistName){
-      console.log("inside createPlaylistFromSongQueue");
-
-
       var newPlaylist = {
         title: playlistName,
         songs: this.state.songQueue
       }
 
-      console.log("newlycreated playlist is ", newPlaylist);
-
       helper.axiosPOSTPlaylist(newPlaylist);
-
 
     }
 
@@ -188,7 +183,14 @@ class App extends Component {
         }
 
       }
+    }
+
+    putPlayListInQueue(playList) {
+      this.setState({
+        songQueue: playList
+      });
     }    
+
 
     componentDidMount(){
       this.handleSearch('awooga');
@@ -215,7 +217,7 @@ class App extends Component {
 
 
 
-           <PlayListView />
+           <PlayListView transferToQueueCB={this.putPlayListInQueue} />
 
            {/*<h1>PlayList</h1>
            <button>Load Your Playlist?</button>

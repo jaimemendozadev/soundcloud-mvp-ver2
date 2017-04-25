@@ -12673,14 +12673,10 @@ var SongQueueViewItem = function SongQueueViewItem(props) {
   };
 
   var removeFromQueue = function removeFromQueue() {
-    console.log("inside songqueue removeFromQueue");
-    console.log(props.cbObj);
     props.cbObj.remove(props.data);
   };
 
   var clickToPlaySong = function clickToPlaySong() {
-    //console.log("inside songqueue clickToPlaySong")
-    console.log("props song is", props.data);
     props.cbObj.clickToPlay(props.data);
   };
 
@@ -12805,6 +12801,7 @@ var App = function (_Component) {
     _this.removeFromQueue = _this.removeFromQueue.bind(_this);
     _this.clickToPlaySong = _this.clickToPlaySong.bind(_this);
     _this.playSongFromQueue = _this.playSongFromQueue.bind(_this);
+    _this.putPlayListInQueue = _this.putPlayListInQueue.bind(_this);
 
     _this.cbObj = {
       createPlaylist: _this.createPlaylistFromSongQueue,
@@ -12845,14 +12842,10 @@ var App = function (_Component) {
   }, {
     key: 'createPlaylistFromSongQueue',
     value: function createPlaylistFromSongQueue(playlistName) {
-      console.log("inside createPlaylistFromSongQueue");
-
       var newPlaylist = {
         title: playlistName,
         songs: this.state.songQueue
       };
-
-      console.log("newlycreated playlist is ", newPlaylist);
 
       helper.axiosPOSTPlaylist(newPlaylist);
     }
@@ -12963,6 +12956,13 @@ var App = function (_Component) {
       }
     }
   }, {
+    key: 'putPlayListInQueue',
+    value: function putPlayListInQueue(playList) {
+      this.setState({
+        songQueue: playList
+      });
+    }
+  }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
       this.handleSearch('awooga');
@@ -12994,7 +12994,7 @@ var App = function (_Component) {
             )
           ),
           _react2.default.createElement(_SongQueueView2.default, { queueList: this.state.songQueue, cbObj: this.cbObj }),
-          _react2.default.createElement(_index2.default, null)
+          _react2.default.createElement(_index2.default, { transferToQueueCB: this.putPlayListInQueue })
         ),
         _react2.default.createElement(
           'div',
@@ -30310,30 +30310,21 @@ var PlayListView = function (_Component) {
       playlists: []
 
     };
-    //this.handleFormChange = this.handleFormChange.bind(this);
     _this.getThePlaylists = _this.getThePlaylists.bind(_this);
 
     return _this;
   }
 
-  // handleFormChange(event){
-
-  //   this.setState({
-  //     SongQueueFormInput: event.target.value
-  //   });
-
-  // }
-
   _createClass(PlayListView, [{
     key: 'getThePlaylists',
     value: function getThePlaylists() {
-      axios.get('/api/allplaylists').then(function (allPlaylists) {
-        console.log("results inside getThePlaylists for PlayListView is ", JSON.stringify(allPlaylists));
-        console.log("");
+      var _this2 = this;
 
-        // this.setState({
-        //   playlists: allPlaylists    
-        // });
+      axios.get('/api/allplaylists').then(function (allPlaylists) {
+
+        _this2.setState({
+          playlists: allPlaylists
+        });
       }).catch(function (error) {
         console.log(error);
       });
@@ -30341,14 +30332,13 @@ var PlayListView = function (_Component) {
   }, {
     key: 'componentDidMount',
     value: function componentDidMount() {
+      var _this3 = this;
 
       axios.get('/api/allplaylists').then(function (allPlaylists) {
-        console.log("playlists retrieved from component did mount", JSON.stringify(allPlaylists));
-        console.log("");
 
-        // this.setState({
-        //   playlists: allPlaylists    
-        // });
+        _this3.setState({
+          playlists: allPlaylists
+        });
       }).catch(function (error) {
         console.log(error);
       });
@@ -30356,6 +30346,8 @@ var PlayListView = function (_Component) {
   }, {
     key: 'render',
     value: function render() {
+      var _this4 = this;
+
       if (this.state.playlists.length === 0) {
         return _react2.default.createElement(
           'div',
@@ -30398,8 +30390,8 @@ var PlayListView = function (_Component) {
           null,
           'Click on the button to retrieve more PlayLists from the database! :) '
         ),
-        this.state.playlists.map(function (song, idx) {
-          return _react2.default.createElement(_PlayListViewItem2.default, { key: song.id, data: song });
+        this.state.playlists.data.map(function (playlist) {
+          return _react2.default.createElement(_PlayListViewItem2.default, { transferToQueueCB: _this4.props.transferToQueueCB, key: playlist._id, playlist: playlist });
         })
       );
     }
@@ -30410,14 +30402,52 @@ var PlayListView = function (_Component) {
 
 exports.default = PlayListView;
 
-//cbObj={this.props.cbObj}
-
 /***/ }),
 /* 253 */
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
 
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(7);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var PlayListViewItem = function PlayListViewItem(props) {
+
+  var handleClick = function handleClick() {
+    props.transferToQueueCB(props.playlist.songs);
+  };
+
+  var styling = {
+    marginTop: 10,
+    marginBottom: 10
+  };
+
+  return _react2.default.createElement(
+    'div',
+    { onClick: handleClick, style: styling },
+    _react2.default.createElement(
+      'h3',
+      null,
+      props.playlist.title
+    ),
+    _react2.default.createElement(
+      'span',
+      null,
+      'Current PlayList Count: ',
+      props.playlist.songs.length
+    )
+  );
+};
+
+exports.default = PlayListViewItem;
 
 /***/ })
 /******/ ]);
