@@ -140,11 +140,9 @@ class App extends Component {
 
       }
 
-
-      this.setState({
-        playSong: song
-      })
     }    
+
+
 
 
     componentDidMount(){
@@ -162,7 +160,7 @@ class App extends Component {
                 soundcloudConfig={scConfig} 
                 url={!this.state.playSong ? this.state.backupSong : this.state.playSong.permalink_url} 
                 controls={true}
-                onEnded={}
+                onEnded={this.playSongFromQueue}
                 playing />
 
                 <h1>Now Playing: {!this.state.playSong ? "Untitled" : this.state.playSong.title }</h1>
