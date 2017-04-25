@@ -11387,17 +11387,17 @@ var SongQueue = function (_Component) {
           { onSubmit: this.handleSubmit },
           _react2.default.createElement('input', { onChange: this.handleFormChange, type: 'text', value: this.state.SongQueueFormInput }),
           _react2.default.createElement(
+            'h4',
+            null,
+            'Save your current SongQueue as a playlist by filling out the form and clicking the Save button!'
+          ),
+          _react2.default.createElement(
             'button',
             { type: 'submit' },
-            'Save SongQueue As Playlist?'
+            'Save SongQueue As Playlist'
           )
         ),
         _react2.default.createElement('br', null),
-        _react2.default.createElement(
-          'h4',
-          null,
-          'Save your current SongQueue as a playlist by filling out the form and clicking the Save button!'
-        ),
         this.props.queueList.map(function (song, idx) {
           return _react2.default.createElement(_SongQueueViewItem2.default, { cbObj: _this2.props.cbObj, key: song.id, data: song });
         })
@@ -30311,6 +30311,7 @@ var PlayListView = function (_Component) {
 
     };
     _this.getThePlaylists = _this.getThePlaylists.bind(_this);
+    _this.deletePlayListInDB = _this.deletePlayListInDB.bind(_this);
 
     return _this;
   }
@@ -30321,10 +30322,21 @@ var PlayListView = function (_Component) {
       var _this2 = this;
 
       axios.get('/api/allplaylists').then(function (allPlaylists) {
-
         _this2.setState({
           playlists: allPlaylists
         });
+      }).catch(function (error) {
+        console.log(error);
+      });
+    }
+  }, {
+    key: 'deletePlayListInDB',
+    value: function deletePlayListInDB(playlistID) {
+
+      var url = '/api/aplaylist/' + playlistID;
+
+      axios.delete(url).then(function (response) {
+        console.log("response inside axios delete playlist", response);
       }).catch(function (error) {
         console.log(error);
       });
@@ -30391,7 +30403,11 @@ var PlayListView = function (_Component) {
           'Click on the button to retrieve more PlayLists from the database! :) '
         ),
         this.state.playlists.data.map(function (playlist) {
-          return _react2.default.createElement(_PlayListViewItem2.default, { transferToQueueCB: _this4.props.transferToQueueCB, key: playlist._id, playlist: playlist });
+          return _react2.default.createElement(_PlayListViewItem2.default, {
+            transferToQueueCB: _this4.props.transferToQueueCB,
+            deletePlayListInDB: _this4.deletePlayListInDB,
+            key: playlist._id,
+            playlist: playlist });
         })
       );
     }
@@ -30425,6 +30441,10 @@ var PlayListViewItem = function PlayListViewItem(props) {
     props.transferToQueueCB(props.playlist.songs);
   };
 
+  var handleDBDelete = function handleDBDelete() {
+    props.deletePlayListInDB(props.playlist._id);
+  };
+
   var styling = {
     marginTop: 10,
     marginBottom: 10
@@ -30432,7 +30452,7 @@ var PlayListViewItem = function PlayListViewItem(props) {
 
   return _react2.default.createElement(
     'div',
-    { onClick: handleClick, style: styling },
+    { style: styling },
     _react2.default.createElement(
       'h3',
       null,
@@ -30443,7 +30463,20 @@ var PlayListViewItem = function PlayListViewItem(props) {
       null,
       'Current PlayList Count: ',
       props.playlist.songs.length
-    )
+    ),
+    _react2.default.createElement('br', null),
+    _react2.default.createElement(
+      'span',
+      { onClick: handleClick },
+      'Click to Add PlayList to Your SongQueue'
+    ),
+    _react2.default.createElement('br', null),
+    _react2.default.createElement(
+      'span',
+      { onClick: handleDBDelete },
+      'Click to Delete PlayList From Your Account'
+    ),
+    _react2.default.createElement('br', null)
   );
 };
 

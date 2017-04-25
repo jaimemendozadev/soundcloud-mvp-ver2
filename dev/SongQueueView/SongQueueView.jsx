@@ -46,12 +46,13 @@ class SongQueue extends Component {
         <h1>SongQueue</h1>
         <form onSubmit={this.handleSubmit}>
           <input onChange={this.handleFormChange} type="text" value={this.state.SongQueueFormInput} />
-          <button type="submit">Save SongQueue As Playlist?</button>
+          <h4>Save your current SongQueue as a playlist by filling out the form and clicking the Save button!</h4>
+          <button type="submit">Save SongQueue As Playlist</button>
         </form>
 
         <br />
 
-        <h4>Save your current SongQueue as a playlist by filling out the form and clicking the Save button!</h4>
+        
 
        
       

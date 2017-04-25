@@ -46,8 +46,18 @@ module.exports = {
   },
 
   deleteAPlayList: function(req, res) {
-    console.log("req.params is ", req.params.title);
-    res.send("controller.deleteAPlayList works");
+
+    var playlistID = {"_id": req.params.id};
+
+    model.deleteAPlayList(playlistID, function(err, deletedPlaylist){
+      if(err){
+        console.log("There was an err deleting the playlist from the db. ", err);
+        res.status(404).send()
+      }
+
+      res.status(200).json(deletedPlaylist);
+
+    });
 
   }
 }
@@ -59,6 +69,9 @@ Working routes/controllers
   -controller.getAllPlayLists
   -controller.postAPlayList 
     -postAPlayList successfully saves actual SoundCloud data to db
+
+
+    
 */
 
 

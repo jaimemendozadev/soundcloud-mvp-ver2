@@ -12,6 +12,7 @@ class PlayListView extends Component {
 
     }
     this.getThePlaylists = this.getThePlaylists.bind(this);
+    this.deletePlayListInDB = this.deletePlayListInDB.bind(this);
 
   }
 
@@ -19,18 +20,27 @@ class PlayListView extends Component {
   getThePlaylists(){
     axios.get('/api/allplaylists')
       .then( (allPlaylists) => {
-
         this.setState({
           playlists: allPlaylists    
         });
+      })
+      .catch( (error) => {
+        console.log(error);
+      });
+  }
+
+  deletePlayListInDB(playlistID){
+
+    var url = `/api/aplaylist/${playlistID}`;
+
+    axios.delete(url)
+      .then( (response) => {
+        console.log("response inside axios delete playlist", response)
         
       })
       .catch( (error) => {
         console.log(error);
       });
-    
-
-
   }
 
   componentDidMount(){
@@ -75,7 +85,11 @@ class PlayListView extends Component {
        
       
         {this.state.playlists.data.map((playlist) => {
-          return <PlayListViewItem transferToQueueCB={this.props.transferToQueueCB} key={playlist._id} playlist={playlist} />
+          return <PlayListViewItem 
+                   transferToQueueCB={this.props.transferToQueueCB}
+                   deletePlayListInDB={this.deletePlayListInDB} 
+                   key={playlist._id} 
+                   playlist={playlist} />
         }) }
 
       </div>      

@@ -31,7 +31,17 @@ module.exports = {
 
   },
 
-  deleteAPlayList: function(callback) {
+  deleteAPlayList: function(playlistID, callback) {
+    Playlist.findOneAndRemove(playlistID, function(err, deletedPlaylist){
+      if(err){
+        console.log("There was an error deleting the playlist from the DB", err);
+        callback(err, null)
+      }
+
+      callback(null, deletedPlaylist);
+      console.log("the playlist was deleted successfully inside the server ", deletedPlaylist);
+
+    });
 
   }
 }
