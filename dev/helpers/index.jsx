@@ -3,15 +3,11 @@ const scConfig = require('../../config.js');
 
 module.exports = {
   axiosGET: function(callback, searchString = 'Zedd'){
-
-    //I assume searchString will be a string
-
-    console.log("Inside axios helper func");
-   
     
 
     //search for track with searchString
-    axios.get(`${scConfig.trackQuery}${scConfig.clientId}&q=${searchString}${scConfig.dateLimit}`)
+    //current search query doesn't include a date range
+    axios.get(`${scConfig.trackQuery}${scConfig.clientId}&q=${searchString}${scConfig.partion}`)
       .then( (response) => {
         console.log("results inside axios is ", JSON.stringify(response));
         console.log("");

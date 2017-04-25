@@ -7935,9 +7935,7 @@ module.exports = emptyObject;
 
 /*
   Query Syntax
-
   http://api.soundcloud.com/tracks? + client_id={your client_id} + &q="" 
-
 */
 
 
@@ -7947,9 +7945,13 @@ module.exports = {
   Secret: '22t5Z1As1QkVGOgQaIFAlFWWnxacWmvN',
   trackQuery: 'http://api.soundcloud.com/tracks?client_id=',
   userQuery: 'http://api.soundcloud.com/users?client_id=',
-  dateLimit: '&created_from="2015-01-01"&created_to="2017-03-30"&limit=200&linked_partitioning=1',
+  dateLimit: '&created_from="2015-01-01"&created_to="2017-03-30"',
+  partion: '&limit=200&linked_partitioning=1',
   showArtwork: true
 };
+
+
+
 
 /***/ }),
 /* 63 */
@@ -11302,12 +11304,9 @@ module.exports = {
     var searchString = arguments.length > 1 && arguments[1] !== undefined ? arguments[1] : 'Zedd';
 
 
-    //I assume searchString will be a string
-
-    console.log("Inside axios helper func");
-
     //search for track with searchString
-    axios.get('' + scConfig.trackQuery + scConfig.clientId + '&q=' + searchString + scConfig.dateLimit).then(function (response) {
+    //current search query doesn't include a date range
+    axios.get('' + scConfig.trackQuery + scConfig.clientId + '&q=' + searchString + scConfig.partion).then(function (response) {
       console.log("results inside axios is ", JSON.stringify(response));
       console.log("");
 
@@ -12560,6 +12559,10 @@ var App = function (_Component) {
 
       if (songObj.length > 0) {
         songObj.forEach(function (song) {
+
+          console.log("the song.created_at date is ", song.created_at);
+          console.log("");
+
           listOfSearchResults.push(song);
         });
       }

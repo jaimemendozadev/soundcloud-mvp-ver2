@@ -52,6 +52,11 @@ class App extends Component {
 
       if(songObj.length > 0) {
         songObj.forEach((song) => {
+
+          console.log("the song.created_at date is ", song.created_at)
+          console.log("")
+
+
           listOfSearchResults.push(song);
         });
       }
