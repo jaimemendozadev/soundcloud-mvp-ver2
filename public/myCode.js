@@ -11301,6 +11301,8 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
 var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
@@ -11311,22 +11313,84 @@ var _SongQueueViewItem2 = _interopRequireDefault(_SongQueueViewItem);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-var SongQueue = function SongQueue(props) {
-  if (!props.queueList) {
-    return _react2.default.createElement(
-      'h3',
-      null,
-      'Waiting for data...'
-    );
+function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+var SongQueue = function (_Component) {
+  _inherits(SongQueue, _Component);
+
+  function SongQueue(props) {
+    _classCallCheck(this, SongQueue);
+
+    var _this = _possibleConstructorReturn(this, (SongQueue.__proto__ || Object.getPrototypeOf(SongQueue)).call(this, props));
+
+    _this.state = {
+      SongQueueFormInput: 'Enter the SongQueue Name...'
+    };
+    _this.handleFormChange = _this.handleFormChange.bind(_this);
+
+    return _this;
   }
-  return _react2.default.createElement(
-    'div',
-    null,
-    props.queueList.map(function (song, idx) {
-      return _react2.default.createElement(_SongQueueViewItem2.default, { cbObj: props.cbObj, key: song.id, data: song });
-    })
-  );
-};
+
+  _createClass(SongQueue, [{
+    key: 'handleFormChange',
+    value: function handleFormChange(event) {
+
+      this.setState({
+        SongQueueFormInput: event.target.value
+      });
+    }
+
+    //onClick={this.createPlaylistFromSongQueue}
+
+  }, {
+    key: 'render',
+    value: function render() {
+      var _this2 = this;
+
+      if (!this.props.queueList) {
+        return _react2.default.createElement(
+          'h3',
+          null,
+          'Waiting for data...'
+        );
+      }
+
+      return _react2.default.createElement(
+        'div',
+        null,
+        _react2.default.createElement(
+          'h1',
+          null,
+          'SongQueue'
+        ),
+        _react2.default.createElement(
+          'form',
+          null,
+          _react2.default.createElement('input', { onChange: this.handleFormChange, type: 'text', value: this.state.SongQueueFormInput }),
+          _react2.default.createElement(
+            'button',
+            { type: 'submit' },
+            'Save SongQueue As Playlist?'
+          )
+        ),
+        _react2.default.createElement(
+          'p',
+          null,
+          'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate ex, minima ipsum similique eaque, ipsa, reprehenderit nam blanditiis omnis facilis necessitatibus corporis aperiam deleniti. Quas, quod, assumenda. Dignissimos, nisi, possimus.'
+        ),
+        this.props.queueList.map(function (song, idx) {
+          return _react2.default.createElement(_SongQueueViewItem2.default, { cbObj: _this2.props.cbObj, key: song.id, data: song });
+        })
+      );
+    }
+  }]);
+
+  return SongQueue;
+}(_react.Component);
 
 exports.default = SongQueue;
 
@@ -11352,6 +11416,18 @@ module.exports = {
       console.log("");
 
       callback(response);
+    }).catch(function (error) {
+      console.log(error);
+    });
+  },
+
+  axiosPOSTPlaylist: function axiosPOSTPlaylist(newPlaylist) {
+
+    //search for track with searchString
+    //current search query doesn't include a date range
+    axios.post('/api/aplaylist', newPlaylist).then(function (response) {
+      console.log("results inside axiosPOSTPlaylist is ", JSON.stringify(response));
+      console.log("");
     }).catch(function (error) {
       console.log(error);
     });
@@ -12577,8 +12653,8 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 var SongQueueViewItem = function SongQueueViewItem(props) {
 
   var styling = {
-    marginTop: 10,
-    marginBottom: 10
+    marginTop: 15,
+    marginBottom: 15
   };
 
   var removeFromQueue = function removeFromQueue() {
@@ -12703,6 +12779,7 @@ var App = function (_Component) {
     //App Methods
     _this.handleSearch = _this.handleSearch.bind(_this);
     _this.getListOfSearchResults = _this.getListOfSearchResults.bind(_this);
+    _this.createPlaylistFromSongQueue = _this.createPlaylistFromSongQueue.bind(_this);
 
     //ListItem callbakcs
     _this.addToSongQueue = _this.addToSongQueue.bind(_this);
@@ -12744,6 +12821,19 @@ var App = function (_Component) {
       this.setState({
         searchResults: listOfSearchResults
       });
+    }
+  }, {
+    key: 'createPlaylistFromSongQueue',
+    value: function createPlaylistFromSongQueue() {
+      console.log("inside createPlaylistFromSongQueue");
+
+      // var newPlaylist = {
+      //   title: someString,
+      //   songs: this.state.songQueue
+      // }
+
+      // helper.axiosPOSTPlaylist(newPlaylist);
+
     }
 
     /*********************
@@ -12881,21 +12971,6 @@ var App = function (_Component) {
               'Now Playing: ',
               !this.state.playSong ? "Untitled" : this.state.playSong.title
             )
-          ),
-          _react2.default.createElement(
-            'h1',
-            null,
-            'SongQueue'
-          ),
-          _react2.default.createElement(
-            'button',
-            null,
-            'Save SongQueue As Playlist?'
-          ),
-          _react2.default.createElement(
-            'p',
-            null,
-            'Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate ex, minima ipsum similique eaque, ipsa, reprehenderit nam blanditiis omnis facilis necessitatibus corporis aperiam deleniti. Quas, quod, assumenda. Dignissimos, nisi, possimus.'
           ),
           _react2.default.createElement(_SongQueueView2.default, { queueList: this.state.songQueue, cbObj: this.cbObj }),
           _react2.default.createElement(

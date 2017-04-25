@@ -3,8 +3,8 @@ import React, {Component} from 'react';
 const SongQueueViewItem = (props) => {
  
     const styling = {
-      marginTop: 10,  
-      marginBottom: 10
+      marginTop: 15,  
+      marginBottom: 15
     }
 
     const removeFromQueue = () => {

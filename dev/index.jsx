@@ -23,6 +23,7 @@ class App extends Component {
       //App Methods
       this.handleSearch = this.handleSearch.bind(this);
       this.getListOfSearchResults = this.getListOfSearchResults.bind(this);
+      this.createPlaylistFromSongQueue = this.createPlaylistFromSongQueue.bind(this);
 
       //ListItem callbakcs
       this.addToSongQueue = this.addToSongQueue.bind(this);
@@ -61,6 +62,22 @@ class App extends Component {
         searchResults: listOfSearchResults
       });
     }
+
+    createPlaylistFromSongQueue(){
+      console.log("inside createPlaylistFromSongQueue");
+
+
+      // var newPlaylist = {
+      //   title: someString,
+      //   songs: this.state.songQueue
+      // }
+
+      // helper.axiosPOSTPlaylist(newPlaylist);
+
+
+    }
+
+
 
 
     /*********************
@@ -189,11 +206,6 @@ class App extends Component {
 
                 <h1>Now Playing: {!this.state.playSong ? "Untitled" : this.state.playSong.title }</h1>
             </div>
-            
-            <h1>SongQueue</h1>
-            <button>Save SongQueue As Playlist?</button>
-
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate ex, minima ipsum similique eaque, ipsa, reprehenderit nam blanditiis omnis facilis necessitatibus corporis aperiam deleniti. Quas, quod, assumenda. Dignissimos, nisi, possimus.</p>
 
            <SongQueueView queueList={this.state.songQueue} cbObj={this.cbObj} />
 
@@ -201,11 +213,6 @@ class App extends Component {
            <button>Load Your Playlist?</button>
 
             <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Voluptate ex, minima ipsum similique eaque, ipsa, reprehenderit nam blanditiis omnis facilis necessitatibus corporis aperiam deleniti. Quas, quod, assumenda. Dignissimos, nisi, possimus.</p>
-
-
-
-
-
 
             
           </div>
