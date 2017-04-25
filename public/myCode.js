@@ -775,6 +775,16 @@ module.exports = ExecutionEnvironment;
 /***/ (function(module, exports, __webpack_require__) {
 
 "use strict";
+
+
+module.exports = __webpack_require__(23);
+
+
+/***/ }),
+/* 8 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
 /* WEBPACK VAR INJECTION */(function(process) {/**
  * Copyright 2016-present, Facebook, Inc.
  * All rights reserved.
@@ -1109,16 +1119,6 @@ var ReactComponentTreeHook = {
 
 module.exports = ReactComponentTreeHook;
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(0)))
-
-/***/ }),
-/* 8 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-module.exports = __webpack_require__(23);
-
 
 /***/ }),
 /* 9 */
@@ -5035,7 +5035,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(8);
+var _react = __webpack_require__(7);
 
 var _props2 = __webpack_require__(55);
 
@@ -5198,7 +5198,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _react = __webpack_require__(8);
+var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -7947,7 +7947,9 @@ module.exports = {
   userQuery: 'http://api.soundcloud.com/users?client_id=',
   dateLimit: '&created_from="2015-01-01"&created_to="2017-03-30"',
   partion: '&limit=200&linked_partitioning=1',
-  showArtwork: true
+  showArtwork: true,
+  dbuser: 'test_user',
+  dbpassword: 'test_user'
 };
 
 
@@ -10916,7 +10918,7 @@ module.exports = REACT_ELEMENT_TYPE;
 
 
 var ReactCurrentOwner = __webpack_require__(14);
-var ReactComponentTreeHook = __webpack_require__(7);
+var ReactComponentTreeHook = __webpack_require__(8);
 var ReactElement = __webpack_require__(19);
 
 var checkReactTypeSpec = __webpack_require__(240);
@@ -11259,11 +11261,11 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _react = __webpack_require__(8);
+var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
-var _ListItem = __webpack_require__(252);
+var _ListItem = __webpack_require__(126);
 
 var _ListItem2 = _interopRequireDefault(_ListItem);
 
@@ -11289,7 +11291,46 @@ var SearchView = function SearchView(props) {
 exports.default = SearchView;
 
 /***/ }),
-/* 104 */,
+/* 104 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(7);
+
+var _react2 = _interopRequireDefault(_react);
+
+var _SongQueueViewItem = __webpack_require__(127);
+
+var _SongQueueViewItem2 = _interopRequireDefault(_SongQueueViewItem);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SongQueue = function SongQueue(props) {
+  if (!props.queueList) {
+    return _react2.default.createElement(
+      'h3',
+      null,
+      'Waiting for data...'
+    );
+  }
+  return _react2.default.createElement(
+    'div',
+    null,
+    props.queueList.map(function (song, idx) {
+      return _react2.default.createElement(_SongQueueViewItem2.default, { cbObj: props.cbObj, key: song.id, data: song });
+    })
+  );
+};
+
+exports.default = SongQueue;
+
+/***/ }),
 /* 105 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -11330,7 +11371,7 @@ Object.defineProperty(exports, "__esModule", {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(8);
+var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -11419,7 +11460,7 @@ var _extends = Object.assign || function (target) { for (var i = 1; i < argument
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(8);
+var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -12458,8 +12499,144 @@ module.exports = function spread(callback) {
 
 
 /***/ }),
-/* 126 */,
-/* 127 */,
+/* 126 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(7);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var ListItem = function ListItem(props) {
+
+  var handleClick = function handleClick() {
+    props.invokeCB(props.data);
+  };
+
+  var styling = {
+    marginTop: 10,
+    marginBottom: 10
+  };
+
+  return _react2.default.createElement(
+    "div",
+    { onClick: handleClick, style: styling },
+    _react2.default.createElement(
+      "span",
+      null,
+      "Title: ",
+      props.data.title ? props.data.title : "Unavailable"
+    ),
+    _react2.default.createElement("br", null),
+    _react2.default.createElement(
+      "span",
+      null,
+      "Genre: ",
+      props.data.genre ? props.data.genre : "Unavailable"
+    ),
+    _react2.default.createElement("br", null),
+    _react2.default.createElement(
+      "span",
+      null,
+      props.data.permalink_url ? _react2.default.createElement(
+        "a",
+        { href: props.data.permalink_url, target: "_blank" },
+        "SoundCloud Link"
+      ) : "Unavailable"
+    )
+  );
+};
+
+exports.default = ListItem;
+
+/***/ }),
+/* 127 */
+/***/ (function(module, exports, __webpack_require__) {
+
+"use strict";
+
+
+Object.defineProperty(exports, "__esModule", {
+  value: true
+});
+
+var _react = __webpack_require__(7);
+
+var _react2 = _interopRequireDefault(_react);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+var SongQueueViewItem = function SongQueueViewItem(props) {
+
+  var styling = {
+    marginTop: 10,
+    marginBottom: 10
+  };
+
+  var removeFromQueue = function removeFromQueue() {
+    console.log("inside songqueue removeFromQueue");
+    console.log(props.cbObj);
+    props.cbObj.remove(props.data);
+  };
+
+  var clickToPlaySong = function clickToPlaySong() {
+    //console.log("inside songqueue clickToPlaySong")
+    console.log("props song is", props.data);
+    props.cbObj.clickToPlay(props.data);
+  };
+
+  return _react2.default.createElement(
+    "div",
+    { style: styling },
+    _react2.default.createElement(
+      "span",
+      null,
+      "Title: ",
+      props.data.title ? props.data.title : "Unavailable"
+    ),
+    _react2.default.createElement("br", null),
+    _react2.default.createElement(
+      "span",
+      null,
+      "Genre: ",
+      props.data.genre ? props.data.genre : "Unavailable"
+    ),
+    _react2.default.createElement("br", null),
+    _react2.default.createElement(
+      "span",
+      null,
+      props.data.permalink_url ? _react2.default.createElement(
+        "a",
+        { href: props.data.permalink_url, target: "_blank" },
+        "SoundCloud Link"
+      ) : "Unavailable"
+    ),
+    _react2.default.createElement("br", null),
+    _react2.default.createElement(
+      "span",
+      { onClick: removeFromQueue },
+      "Click to Remove From Queue"
+    ),
+    _react2.default.createElement("br", null),
+    _react2.default.createElement(
+      "span",
+      { onClick: clickToPlaySong },
+      "Click to Play This Song"
+    )
+  );
+};
+
+exports.default = SongQueueViewItem;
+
+/***/ }),
 /* 128 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -12468,7 +12645,7 @@ module.exports = function spread(callback) {
 
 var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
 
-var _react = __webpack_require__(8);
+var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -12492,7 +12669,7 @@ var _SearchView = __webpack_require__(103);
 
 var _SearchView2 = _interopRequireDefault(_SearchView);
 
-var _SongQueueView = __webpack_require__(253);
+var _SongQueueView = __webpack_require__(104);
 
 var _SongQueueView2 = _interopRequireDefault(_SongQueueView);
 
@@ -14386,7 +14563,7 @@ if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 't
   // https://github.com/facebook/react/issues/7240
   // Remove the inline requires when we don't need them anymore:
   // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook = __webpack_require__(7);
+  ReactComponentTreeHook = __webpack_require__(8);
 }
 
 function instantiateChild(childInstances, child, name, selfDebugID) {
@@ -14394,7 +14571,7 @@ function instantiateChild(childInstances, child, name, selfDebugID) {
   var keyUnique = childInstances[name] === undefined;
   if (process.env.NODE_ENV !== 'production') {
     if (!ReactComponentTreeHook) {
-      ReactComponentTreeHook = __webpack_require__(7);
+      ReactComponentTreeHook = __webpack_require__(8);
     }
     if (!keyUnique) {
       process.env.NODE_ENV !== 'production' ? warning(false, 'flattenChildren(...): Encountered two children with the same key, ' + '`%s`. Child keys must be unique; when two children share a key, only ' + 'the first child will be used.%s', KeyEscapeUtils.unescape(name), ReactComponentTreeHook.getStackAddendumByID(selfDebugID)) : void 0;
@@ -17056,7 +17233,7 @@ module.exports = ReactDOMInput;
 
 
 var DOMProperty = __webpack_require__(17);
-var ReactComponentTreeHook = __webpack_require__(7);
+var ReactComponentTreeHook = __webpack_require__(8);
 
 var warning = __webpack_require__(2);
 
@@ -17154,7 +17331,7 @@ module.exports = ReactDOMInvalidARIAHook;
 
 
 
-var ReactComponentTreeHook = __webpack_require__(7);
+var ReactComponentTreeHook = __webpack_require__(8);
 
 var warning = __webpack_require__(2);
 
@@ -18029,7 +18206,7 @@ module.exports = {
 
 var DOMProperty = __webpack_require__(17);
 var EventPluginRegistry = __webpack_require__(28);
-var ReactComponentTreeHook = __webpack_require__(7);
+var ReactComponentTreeHook = __webpack_require__(8);
 
 var warning = __webpack_require__(2);
 
@@ -18148,7 +18325,7 @@ module.exports = ReactDOMUnknownPropertyHook;
 
 var ReactInvalidSetStateWarningHook = __webpack_require__(165);
 var ReactHostOperationHistoryHook = __webpack_require__(163);
-var ReactComponentTreeHook = __webpack_require__(7);
+var ReactComponentTreeHook = __webpack_require__(8);
 var ExecutionEnvironment = __webpack_require__(6);
 
 var performanceNow = __webpack_require__(212);
@@ -21494,7 +21671,7 @@ if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 't
   // https://github.com/facebook/react/issues/7240
   // Remove the inline requires when we don't need them anymore:
   // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook = __webpack_require__(7);
+  ReactComponentTreeHook = __webpack_require__(8);
 }
 
 var loggedTypeFailures = {};
@@ -21536,7 +21713,7 @@ function checkReactTypeSpec(typeSpecs, values, location, componentName, element,
 
         if (process.env.NODE_ENV !== 'production') {
           if (!ReactComponentTreeHook) {
-            ReactComponentTreeHook = __webpack_require__(7);
+            ReactComponentTreeHook = __webpack_require__(8);
           }
           if (debugID !== null) {
             componentStackInfo = ReactComponentTreeHook.getStackAddendumByID(debugID);
@@ -21735,7 +21912,7 @@ if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 't
   // https://github.com/facebook/react/issues/7240
   // Remove the inline requires when we don't need them anymore:
   // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook = __webpack_require__(7);
+  ReactComponentTreeHook = __webpack_require__(8);
 }
 
 /**
@@ -21751,7 +21928,7 @@ function flattenSingleChildIntoContext(traverseContext, child, name, selfDebugID
     var keyUnique = result[name] === undefined;
     if (process.env.NODE_ENV !== 'production') {
       if (!ReactComponentTreeHook) {
-        ReactComponentTreeHook = __webpack_require__(7);
+        ReactComponentTreeHook = __webpack_require__(8);
       }
       if (!keyUnique) {
         process.env.NODE_ENV !== 'production' ? warning(false, 'flattenChildren(...): Encountered two children with the same key, ' + '`%s`. Child keys must be unique; when two children share a key, only ' + 'the first child will be used.%s', KeyEscapeUtils.unescape(name), ReactComponentTreeHook.getStackAddendumByID(selfDebugID)) : void 0;
@@ -23514,7 +23691,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _react = __webpack_require__(8);
+var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -23855,7 +24032,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _react = __webpack_require__(8);
+var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -24066,7 +24243,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _react = __webpack_require__(8);
+var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -24252,7 +24429,7 @@ var _createClass = function () { function defineProperties(target, props) { for 
 
 var _get = function get(object, property, receiver) { if (object === null) object = Function.prototype; var desc = Object.getOwnPropertyDescriptor(object, property); if (desc === undefined) { var parent = Object.getPrototypeOf(object); if (parent === null) { return undefined; } else { return get(parent, property, receiver); } } else if ("value" in desc) { return desc.value; } else { var getter = desc.get; if (getter === undefined) { return undefined; } return getter.call(receiver); } };
 
-var _react = __webpack_require__(8);
+var _react = __webpack_require__(7);
 
 var _react2 = _interopRequireDefault(_react);
 
@@ -27063,7 +27240,7 @@ if (typeof process !== 'undefined' && process.env && process.env.NODE_ENV === 't
   // https://github.com/facebook/react/issues/7240
   // Remove the inline requires when we don't need them anymore:
   // https://github.com/facebook/react/pull/7178
-  ReactComponentTreeHook = __webpack_require__(7);
+  ReactComponentTreeHook = __webpack_require__(8);
 }
 
 var loggedTypeFailures = {};
@@ -27105,7 +27282,7 @@ function checkReactTypeSpec(typeSpecs, values, location, componentName, element,
 
         if (process.env.NODE_ENV !== 'production') {
           if (!ReactComponentTreeHook) {
-            ReactComponentTreeHook = __webpack_require__(7);
+            ReactComponentTreeHook = __webpack_require__(8);
           }
           if (debugID !== null) {
             componentStackInfo = ReactComponentTreeHook.getStackAddendumByID(debugID);
@@ -30003,185 +30180,6 @@ module.exports = Array.isArray || function (arr) {
   return toString.call(arr) == '[object Array]';
 };
 
-
-/***/ }),
-/* 252 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(8);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var ListItem = function ListItem(props) {
-
-  var handleClick = function handleClick() {
-    props.invokeCB(props.data);
-  };
-
-  var styling = {
-    marginTop: 10,
-    marginBottom: 10
-  };
-
-  return _react2.default.createElement(
-    "div",
-    { onClick: handleClick, style: styling },
-    _react2.default.createElement(
-      "span",
-      null,
-      "Title: ",
-      props.data.title ? props.data.title : "Unavailable"
-    ),
-    _react2.default.createElement("br", null),
-    _react2.default.createElement(
-      "span",
-      null,
-      "Genre: ",
-      props.data.genre ? props.data.genre : "Unavailable"
-    ),
-    _react2.default.createElement("br", null),
-    _react2.default.createElement(
-      "span",
-      null,
-      props.data.permalink_url ? _react2.default.createElement(
-        "a",
-        { href: props.data.permalink_url, target: "_blank" },
-        "SoundCloud Link"
-      ) : "Unavailable"
-    )
-  );
-};
-
-exports.default = ListItem;
-
-/***/ }),
-/* 253 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(8);
-
-var _react2 = _interopRequireDefault(_react);
-
-var _SongQueueViewItem = __webpack_require__(255);
-
-var _SongQueueViewItem2 = _interopRequireDefault(_SongQueueViewItem);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var SongQueue = function SongQueue(props) {
-  if (!props.queueList) {
-    return _react2.default.createElement(
-      'h3',
-      null,
-      'Waiting for data...'
-    );
-  }
-  return _react2.default.createElement(
-    'div',
-    null,
-    props.queueList.map(function (song, idx) {
-      return _react2.default.createElement(_SongQueueViewItem2.default, { cbObj: props.cbObj, key: song.id, data: song });
-    })
-  );
-};
-
-exports.default = SongQueue;
-
-/***/ }),
-/* 254 */,
-/* 255 */
-/***/ (function(module, exports, __webpack_require__) {
-
-"use strict";
-
-
-Object.defineProperty(exports, "__esModule", {
-  value: true
-});
-
-var _react = __webpack_require__(8);
-
-var _react2 = _interopRequireDefault(_react);
-
-function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
-
-var SongQueueViewItem = function SongQueueViewItem(props) {
-
-  var styling = {
-    marginTop: 10,
-    marginBottom: 10
-  };
-
-  var removeFromQueue = function removeFromQueue() {
-    console.log("inside songqueue removeFromQueue");
-    console.log(props.cbObj);
-    props.cbObj.remove(props.data);
-  };
-
-  var clickToPlaySong = function clickToPlaySong() {
-    //console.log("inside songqueue clickToPlaySong")
-    console.log("props song is", props.data);
-    props.cbObj.clickToPlay(props.data);
-  };
-
-  return _react2.default.createElement(
-    "div",
-    { style: styling },
-    _react2.default.createElement(
-      "span",
-      null,
-      "Title: ",
-      props.data.title ? props.data.title : "Unavailable"
-    ),
-    _react2.default.createElement("br", null),
-    _react2.default.createElement(
-      "span",
-      null,
-      "Genre: ",
-      props.data.genre ? props.data.genre : "Unavailable"
-    ),
-    _react2.default.createElement("br", null),
-    _react2.default.createElement(
-      "span",
-      null,
-      props.data.permalink_url ? _react2.default.createElement(
-        "a",
-        { href: props.data.permalink_url, target: "_blank" },
-        "SoundCloud Link"
-      ) : "Unavailable"
-    ),
-    _react2.default.createElement("br", null),
-    _react2.default.createElement(
-      "span",
-      { onClick: removeFromQueue },
-      "Click to Remove From Queue"
-    ),
-    _react2.default.createElement("br", null),
-    _react2.default.createElement(
-      "span",
-      { onClick: clickToPlaySong },
-      "Click to Play This Song"
-    )
-  );
-};
-
-exports.default = SongQueueViewItem;
 
 /***/ })
 /******/ ]);
