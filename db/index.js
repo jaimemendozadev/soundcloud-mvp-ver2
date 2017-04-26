@@ -1,6 +1,5 @@
 //Import the mongoose module
 var mongoose = require('mongoose');
-var config = require('../config.js');
 
 //Set up default mongoose connection
 var mongoDB = 'mongodb://' + ENV['test_user'] + ':' + ENV['test_user'] + '@ds117251.mlab.com:17251/readio_db';

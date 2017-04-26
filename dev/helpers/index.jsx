@@ -1,5 +1,4 @@
 var axios = require('axios');
-const scConfig = require('../../config.js');
 
 module.exports = {
   axiosGET: function(callback, searchString = 'Zedd'){

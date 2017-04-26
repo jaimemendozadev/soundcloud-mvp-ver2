@@ -7,7 +7,6 @@ import Search from './search.jsx';
 import SearchView from './SearchView/SearchView.jsx';
 import SongQueueView from './SongQueueView/SongQueueView.jsx'
 const helper = require('./helpers/index.jsx');
-const scConfig = require('../config.js');
 
 
 class App extends Component {
@@ -206,6 +205,9 @@ class App extends Component {
     }
 
     render() {
+      const scConfig = {
+        showArtwork: true
+      }
 
       return (
         
