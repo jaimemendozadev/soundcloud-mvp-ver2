@@ -7,7 +7,7 @@ module.exports = {
 
     //search for track with searchString
     //current search query doesn't include a date range
-    axios.get(`${scConfig.trackQuery}${scConfig.clientId}&q=${searchString}${scConfig.partion}`)
+    axios.get(`http://api.soundcloud.com/tracks?client_id=` + ENV['clientId'] + `&q=${searchString}&limit=200&linked_partitioning=1`)
       .then( (response) => {
         // console.log("results inside axios is ", JSON.stringify(response));
         // console.log("");
